@@ -34,6 +34,20 @@
     margin-left: 40px;
 }
 
+#pass1
+{
+    width: 295px;
+    height: 50px;
+    margin-left: 40px;
+}
+
+#email
+{
+    width: 295px;
+    height: 50px;
+    margin-left: 40px;
+}
+
 .input-group
 {
     margin-left: 40px;
@@ -75,6 +89,14 @@
     margin-top: 20px;
 }
 
+#btn-reg
+{
+    width: 295px;
+    height: 50px;
+    margin-left: 40px;
+    margin-top: 20px;
+}
+
 #remember
 {
     width: 80px;
@@ -84,3 +106,26 @@
     color: #676a6c;
     font-size: 15px;
 }
+
+.text-danger {
+    color: red;
+  }
+  .control-label {
+    text-align: left !important;
+  }
+  #resultBox {
+    width: 100%;
+    height: 300px;
+    border: 1px solid #888;
+    padding: 5px;
+    overflow: auto;
+    margin-bottom: 20px;
+  }
+  .uploaderMsgBox {
+    width: 100%;
+    border-bottom: 1px solid #888;
+  }
+  .cancel-upload {
+    text-decoration: none;
+    cursor: pointer;
+  }

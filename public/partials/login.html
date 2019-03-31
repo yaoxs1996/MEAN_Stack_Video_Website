@@ -1,14 +1,26 @@
-<canvas class="particle"></canvas>
-<div id="box">
-    <div id="logo">欢迎登录！</div>
-    <div id="info">
-        <input type="text" class="form-control" id="user" placeholder="账号：">
-        <input type="password" class="form-control" id="pass" placeholder="密码：">
-        <div class="input-group">
-            <img id="img-submit" src="submit.jpg">
-            <u><input type="text" class="form-control" id="validateCode" name="validateCode" placeholder="验证码"></u>
-        </div>
-        <button class="btn btn-info" id="btn-login">登录</button>
-        <div id="remember">记住登录 <input type="checkbox"></div>
+
+<form id="login" method="POST">
+    <div ng-model="warning"><p>{{warning}}</p></div>
+    <div id="uname_text" class="form-group">
+        <input type="text" placeholder="请输入用户名" name="u_name" ng-model="_user.u_name" required>
     </div>
-</div>
+    <div id="pwd_text" class="form-group">
+        <input type="password" placeholder="请输入密码" name="u_pwd" ng-model="_user.u_pwd" required>
+    </div>
+    <div id="submit_bg">
+        <button id="submit_btn" type="submit" class="btn btn-secondary btn-lg" ng-click="loginAction()">登录</button>
+    </div>
+</form>
+
+<!--form id="loginFormInfo" ng-controller="LoginCtrl" ng-submit="loginAction()">
+    <div ng-model="warning"><p>{{warning}}</p></div>
+    <div id="uname_text" class="form-group">
+        <input type="text" placeholder="输入账号" ng-model="user.id" required ng-minlength="1">
+    </div>
+    <div id="pwd_text" class="form-group">
+        <input type="password" placeholder="输入密码" ng-model="user.pwd" required ng-minlength="1">
+    </div>
+    <div id="submit_bg">
+        <button id="submit_btn" type="submit" class="btn btn-secondary btn-lg" ng-disabled="loginFormInfo.$invalid">立即登录</button>
+    </div>
+</form-->

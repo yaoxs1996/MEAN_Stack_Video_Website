@@ -3,15 +3,26 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="stylesheets/sign.css" rel="stylesheet">
     
-    <script src="https://cdn.bootcss.com/angular.js/1.7.8/angular.min.js"></script>
-    <script src="https://cdn.bootcss.com/angular.js/1.7.8/angular-route.min.js"></script>
-    <script src="https://cdn.bootcss.com/angular.js/1.7.8/angular-resource.min.js"></script>
-    <script src="javascripts/website.js"></script>
+    <script src="javascripts/angular.min.js"></script>
+    <script src="javascripts/angular-route.min.js"></script>
+    <script src="javascripts/angular-resource.min.js"></script>
+    <script src="javascripts/jquery-3.3.1.min.js"></script>
+
+    <script src="js/website.js"></script>
+    <!--script src="javascripts/myjs.js"></script-->
   </head>
   <body>
+      <ul class="nav nav-pills">
+          <li role="presentation" class="active"><a href="/#!/">首页</a></li>
+          <li role="presentation" ><a href="/#!/login">登录</a></li>
+          <li role="presentation" ><a href="/#!/register">注册</a></li>
+          <li role="presentation"><a href="/#!/upload">视频上传</a></li>
+        </ul>
+        <%= message %>
     <div ng-view> </div>
+
   </body>
 </html>

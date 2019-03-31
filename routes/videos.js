@@ -33,4 +33,27 @@ router.get('/:id', function(req, res)
     });
 });
 
+//上传视频
+router.post('/', function(req, res)
+{
+    var collection = db.get('videos');
+    collection.insert({
+        up_date: Date().now(),
+        v_tag: req.body.tag,
+        v_path: "videos/" + req.body.videoname,
+        v_coverage: "asset/" + req.body.picname,
+        v_title: req.body.title,
+        v_brief: req.body.brief,
+        v_viewcounts: 0,
+        like: 0
+    }, function(err, video)
+    {
+        if(err)
+        {
+            throw err;
+        }
+        res.json(video);
+    });
+});
+
 module.exports = router;

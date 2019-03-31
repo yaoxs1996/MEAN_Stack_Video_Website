@@ -1,14 +1,12 @@
-<div class="sign">
-    <div class="main">
-        <h4 class="title">
-            <div class="normal-title">
-                <a class="" href="/#!/user/login">登录</a>
-                <b>·</b>
-                <a id="js-sign-up-btn" class="active" href="/#!/user/register">注册</a>
-            </div>
-        </h4>
-        <div class="js-sign-up-container">
-            
-        </div>
+<canvas class="particle"></canvas>
+<div id="box">
+    <div id="logo">欢迎注册！</div>
+    <div id="info">
+        <div ng-model="warning"><p>{{warning}}</p></div>
+        <input type="text" class="form-control" ng-model="user.u_name" id="user" placeholder="请输入用户名：" required>
+        <input type="password" class="form-control" ng-model="user.pwd" id="pass" placeholder="请输入密码：" required>
+        <input type="password" class="form-control" id="pass1" placeholder="请再次输入密码：" required>
+        <input type="text" class="form-control" ng-model="user.email" id="email" placeholder="请输入邮箱：" required>
+        <input type="button" class="btn btn-info" id="btn-reg" value="确认注册" ng-click="save()" />
     </div>
 </div>
