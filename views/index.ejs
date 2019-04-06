@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="WEBSITE">
+<html ng-app="WEBSITE" ng-init="USERID=''; isLogin=false">
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
@@ -10,6 +10,7 @@
     <script src="javascripts/angular-route.min.js"></script>
     <script src="javascripts/angular-resource.min.js"></script>
     <script src="javascripts/jquery-3.3.1.min.js"></script>
+    <script src="javascripts/angular-file-upload.js"></script>
 
     <script src="js/website.js"></script>
     <!--script src="javascripts/myjs.js"></script-->
@@ -17,11 +18,12 @@
   <body>
       <ul class="nav nav-pills">
           <li role="presentation" class="active"><a href="/#!/">首页</a></li>
-          <li role="presentation" ><a href="/#!/login">登录</a></li>
-          <li role="presentation" ><a href="/#!/register">注册</a></li>
-          <li role="presentation"><a href="/#!/upload">视频上传</a></li>
+          <li role="presentation" ng-if="!isLogin"><a href="/#!/login">登录</a></li>
+          <li role="presentation" ng-if="!isLogin"><a href="/#!/register">注册</a></li>
+          <li role="presentation" ng-if="isLogin"><a href="/#!/upload">视频上传</a></li>
+          <li role="presentation" ng-if="isLogin"><a href="/#!/">个人中心</a></li>
+          <li role="presentation" ng-if="isLogin"><a href="/#!/logout">退出</a></li>
         </ul>
-        <%= message %>
     <div ng-view> </div>
 
   </body>

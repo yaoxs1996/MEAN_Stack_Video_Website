@@ -1,6 +1,9 @@
 //为主页提供RESTful API
 var express = require('express');
 var router = express.Router();
+var fs = require('fs');     //文件系统
+var multer = require('multer');     //上传模块
+var upload = multer({dest: 'public/videos/'}).single('up_v');       //实例上传模块，前端使用参数名
 
 var monk = require('monk');
 var db = monk('localhost:27017/website');
@@ -25,20 +28,24 @@ router.get('/:id', function(req, res)
     var collection = db.get('videos');
     collection.findOne({_id: req.params.id}, function(err, video)
     {
+        //console.log(video.toJSONString());
         if(err)
         {
             throw err;
         }
-        res.json(video);
+        res.status(200).json(video);
     });
 });
 
 //上传视频
 router.post('/', function(req, res)
 {
+    
+    //数据库信息插入
     var collection = db.get('videos');
     collection.insert({
-        up_date: Date().now(),
+        up_date: new Date(),
+        up_id: req.body.up_id,
         v_tag: req.body.tag,
         v_path: "videos/" + req.body.videoname,
         v_coverage: "asset/" + req.body.picname,

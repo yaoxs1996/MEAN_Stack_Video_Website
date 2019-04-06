@@ -42,6 +42,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('./'));    //与文件上传相关
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -58,9 +59,14 @@ app.use('/api/login', loginRouter);
 var regRouter = require('./routes/register');
 app.use('/api/register',regRouter);
 //文件上传
-var upload = require('./routes/upload');
-app.use('/upload', upload);
+var uploadRouter = require('./routes/video_upload');
+app.use('/video_upload', uploadRouter);
+//var upload_pic = require('./routes/upload_pic');
+//app.use('/upload_pic', upload_pic);
 
+//评论功能
+var commentRouter = require('./routes/comment');
+app.use('/comment', commentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

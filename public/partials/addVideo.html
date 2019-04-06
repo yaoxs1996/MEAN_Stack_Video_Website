@@ -1,7 +1,19 @@
 <div class="container" style="border:1px solid #ddd">
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="content"/>
-        <br />
-        <input type="submit" value="上传文件" />
-    </form>
+<form action="/video_upload" method="POST" enctype="multipart/form-data">
+    <div class="form-line">
+        <label>请选择视频文件：</label><span class="small-tip">视频文件暂只支持.mp4格式</span>
+        <input id="files" type="file" name="file" ng-src={{files[0].name}} onchange="angular.element(this).scope().fileChanged(this)"/>
+    </div>
+    <p>分区</p>
+    <select ng-model="video.tag">
+        <option value="Game">游戏</option>
+        <option value="Food">美食</option>
+        <option value="Technology">科技</option>
+    </select>
+    <p>标题</p>
+    <input type="text" class="form-control" aria-describedby="basic-addon1" ng-model="video.title">
+    <p>简介</p>
+    <textarea class="form-control" ng-model="video.brief"></textarea>
+    <button type="submit" ng-click="upload()">投稿</button>
+</form>
 </div>

@@ -1,6 +1,21 @@
-<a href="/#!/">返回首页</a>
+
 <p>{{video.v_title}}</p>
 <video src="{{video.v_path}}" width="320" height="240" controls="controls">
     <!--source src="{{video.v_path}}" type="video/mp4"-->
 </video>
 <p>{{video.v_brief}}</p>
+
+<div>
+    <form method="POST">
+        <textarea class="form-control" ng-model="comment_sub.content">{{comment_sub.content}}</textarea>
+        <input type="button" class="btn btn-primary" value="发布评论" ng-click="comment_submit()"/>
+    </form>
+</div>
+<div>
+    <ul>
+        <li ng-repeat='comment in commentList'>
+            <p>{{comment.from_uid}}</p>
+            <p>{{comment.content}}</p>
+        </li>
+    </ul>
+</div>
