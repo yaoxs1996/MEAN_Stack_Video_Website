@@ -68,6 +68,13 @@ app.use('/video_upload', uploadRouter);
 var commentRouter = require('./routes/comment');
 app.use('/comment', commentRouter);
 
+//个人信息
+var userinfoRouter = require('./routes/userinfo');
+app.use('/api/user', userinfoRouter);
+
+var userVideoRouter = require('./routes/user_videos');
+app.use('/api/user_videos', userVideoRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

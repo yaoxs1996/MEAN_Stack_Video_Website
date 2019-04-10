@@ -1,6 +1,6 @@
 //主页的相关的配置与控制器
 //本类型文件只允许有一个
-var app = angular.module('WEBSITE', ['ngResource', 'ngRoute', 'angularFileUpload']);
+var app = angular.module('WEBSITE', ['ngResource', 'ngRoute']);
 app.config(['$routeProvider', function($routeProvider)
 {
     $routeProvider
@@ -13,6 +13,11 @@ app.config(['$routeProvider', function($routeProvider)
     {
         templateUrl: 'partials/video_play.html',
         controller: 'PlayCtrl'
+    })
+    .when('/user/:id',
+    {
+        templateUrl: 'partials/user_info.html',
+        controller: 'UserCtrl'
     })
     .when('/upload',
     {
@@ -190,3 +195,42 @@ function($scope, $resource, $location, $rootScope)
     };
 }]);
 
+//用户信息控制器
+app.controller('UserCtrl', ['$scope', '$resource', '$location', '$routeParams',
+function($scope, $resource, $location, $routeParams)
+{
+    var User = $resource('/api/user/:id');
+    var User_update = $resource('/api/user/:id', {id: '@u_name'}, {update: {method: 'PUT'}});
+    var Videos = $resource('/api/user_videos/:id');
+    var Video_delete = $resource('/api/user_videos/:id');
+
+    //获取用户信息
+    User.get({id: $routeParams.id}, function(user)
+    {
+        $scope.user = user;
+    });
+
+    $scope.save = function()
+    {
+        User_update.update($scope.user, function()
+        {
+            //刷新
+            $location.path('/');
+        });
+    };
+
+    //获取用户的视频列表
+    Videos.get({id: $routeParams.id}, function(videos)
+    {
+        $scope.videolist = videos;
+    });
+
+    //用户删除视频
+    $scope.video_del = function()
+    {
+        Video_delete.delete({id: $scope.xxx}, function(video)
+        {
+            //刷新局部
+        });
+    };
+}]);
