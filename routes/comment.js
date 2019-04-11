@@ -43,7 +43,8 @@ router.post('/', function(req, res)
     collection.insert({
         v_id: req.body.v_id,
         content: req.body.content,
-        from_uid: req.body.from_uid
+        from_uid: req.body.from_uid,
+        date: new Date(),
     },
     function(err, comment)
     {

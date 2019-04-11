@@ -4,10 +4,23 @@ var router = express.Router();
 var monk = require('monk');
 var db = monk('localhost:27017/website');
 
+router.get('/:id', function(req, res)
+{
+    var collection = db.get('users');
+    collection.findOne({u_name: req.params.id}, function(err, user)
+    {
+        if(err)
+        {
+            throw err;
+        }
+        res.json(user);
+    });
+});
+
 //注册功能
 router.post('/', function(req, res)
 {
-    console.log(req.body);
+    //console.log(req.body);
     var collection = db.get('users');
     //判断用户名是否已存在
     //var username = req.body.u_name;

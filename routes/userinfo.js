@@ -25,8 +25,10 @@ router.put('/:id', function(req, res)
     var collection = db.get('users');
     collection.update({u_name: req.params.id},
     {
+        u_name: req.body.u_name,
         u_pwd: req.body.u_pwd,
-        sex: req.body.sex
+        sex: req.body.sex,
+        email: req.body.email
         //birth: req.body.birth
     }, function(err, user)
     {

@@ -1,23 +1,89 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6">
-      <form>
-        <label>用户名</label><p>{{user.u_name}}</p>
-        <input class="form-control" ng-model="user.email">
-        <input type="radio" ng-model="user.sex" value="男">男
-        <input type="radio" ng-model="user.sex" value="女">女
-        <input type="radio" ng-model="user.sex" value="">保密
-      </form>
+  <div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">我的信息</div>
+        <div class="card-body">
+          <form name="infoForm" novalidate>
+            <table>
+              <tr>
+                <td><div style="height:40px;line-height: 40px;"><p>用户名：</p></div></td>
+                <td><div style="height:40px;line-height: 40px;">{{user.u_name}}</div></td>
+              </tr>
+              <tr>
+                <td><div style="height:40px;line-height: 40px;"><p>邮  箱：</p></div></td>
+                <td><div style="height:40px;line-height: 40px;"><input type="email" class="form-control" style="width:400px;" ng-model="user.email"></div></td>
+                <span style="color:red" ng-show="infoForm.user.email.$dirty && infoForm.user.email.$invalid">
+                <span ng-show="infoForm.user.email.$error.required">邮箱不可为空</span>
+                <span ng-show="infoForm.user.email.$error.email">非法邮箱</span>
+                </span>
+              </tr>
+              <tr>
+                <td><div style="height:40px;line-height: 40px;"><p>性  别：</p></div></td>
+                <td>
+                  <div style="height:40px;line-height: 40px;">
+                    <input type="radio" ng-model="user.sex" style="line-height:24px" value="男">男
+                    <input type="radio" ng-model="user.sex" style="line-height:24px" value="女">女
+                    <input type="radio" ng-model="user.sex" style="line-height:24px" value="">保密
+                  </div>
+                </td>
+              </tr>
+            </table>
+            <button type="button" ng-disabled="infoForm.user.email.$dirty && infoForm.user.email.$invalid" class="btn btn-primary" ng-click="apply_info()">修改信息</button>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="col-md-3"></div>
+    <div class="col-md-2"></div>
   </div>
 
-  <div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6">
-      <p></p>
+  <div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">密码修改</div>
+        <div class="card-body">
+          <table>
+            <tr>
+              <td><div style="height:40px;line-height: 40px;"><p>原密码：</p></div></td>
+              <td><div style="height:40px;line-height: 40px;"><input type="password" class="form-control" style="width: 360px;" ng-model="user.oldpass"></div></td>
+            </tr>
+            <tr>
+                <td><div style="height:40px;line-height: 40px;"><p>新密码：</p></div></td>
+                <td><div style="height:40px;line-height: 40px;"><input type="password" class="form-control" style="width: 360px;" ng-model="user.newpass"></div></td>
+            </tr>
+            <tr>
+                <td><div style="height:40px;line-height: 40px;"><p>再次输入密码：</p></div></td>
+                <td><div style="height:40px;line-height: 40px;"><input type="password" class="form-control" style="width: 360px;" ng-model="user.newpass_1"></div></td>
+            </tr>
+          </table>
+          <button type="button" class="btn btn-primary" ng-click="apply_pass()">提交密码</button>
+        </div>
+      </div>
     </div>
-    <div class="col-md-3"></div>
   </div>
+
+  <div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">我的投稿</div>
+        <div class="card-body">
+          <ul>
+            <li ng-repeat='video in videolist' class="videolist">
+              <div class="col-sm-6">
+                <a href="/#!/video/{{video._id}}">
+                <img ng-src="{{video.v_coverage}}" alt="pic" width="160" height="100">
+                </a>
+                <p>{{video.v_title}}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+
 </div>

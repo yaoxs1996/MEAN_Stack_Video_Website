@@ -1,19 +1,111 @@
 <div class="container">
-	<div class="row">
-    <div class="col-sm-2"></div>
-    <div class="col-sm-8">
-      <h4>推广</h4>
+
+  <div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">游戏</div>
+        <div class="card-body">
+          <ul>
+            <li ng-repeat="video in videos | filter: {v_tag: 'Game'} | limitTo: 8" class="videolist">
+              <div class="col-md-3">
+                <a href="/#!/video/{{video._id}}">
+                <img ng-src="{{video.v_coverage}}" alt="game" width="160" height="100">
+                </a>
+                <p>{{video.v_title}}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+
+  <div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">生活</div>
+        <div class="card-body">
+          <ul>
+            <li ng-repeat="video in videos | filter: {v_tag: 'Life'} | limitTo: 8" class="videolist">
+              <div class="col-md-3">
+                <a href="/#!/video/{{video._id}}">
+                <img ng-src="{{video.v_coverage}}" alt="life" width="160" height="100">
+                </a>
+                <p>{{video.v_title}}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+
+  <div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">影视</div>
+        <div class="card-body">
+          <ul>
+            <li ng-repeat="video in videos | filter: {v_tag: 'FilmNTV'} | limitTo: 8" class="videolist">
+              <div class="col-md-3">
+                <a href="/#!/video/{{video._id}}">
+                <img ng-src="{{video.v_coverage}}" alt="tv" width="160" height="100">
+                </a>
+                <p>{{video.v_title}}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+      
+  <div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">科技</div>
+        <div class="card-body">
+          <ul>
+            <li ng-repeat="video in videos | filter: {v_tag: 'Technology'} | limitTo: 8" class="videolist">
+              <div class="col-md-3">
+                <a href="/#!/video/{{video._id}}">
+                <img ng-src="{{video.v_coverage}}" alt="tech" width="160" height="100">
+                </a>
+                <p>{{video.v_title}}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+
+	<div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+      <div class="card-header">全部视频</div>
+      <div class="card-body">
         <ul>
-          <li ng-repeat='video in videos' class="videolist">
-            <div class="col-sm-3">
+          <li ng-repeat="video in videos" class="videolist">
+            <div class="col-md-3">
               <a href="/#!/video/{{video._id}}">
               <img ng-src="{{video.v_coverage}}" alt="guda" width="160" height="100">
               </a>
-            
             <p>{{video.v_title}}</p>
-          </div>
+            </div>
           </li>
         </ul>
+      </div>
+      </div>
     </div>
     <div class="col-sm-2"></div>
 	</div>

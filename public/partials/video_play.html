@@ -1,11 +1,11 @@
 
-<p>{{video.v_title}}</p>
-<video src="{{video.v_path}}" width="320" height="240" controls="controls">
+<!--p>{{video.v_title}}</p>
+<video src="{{video.v_path}}" width="320" height="240" controls="controls"-->
     <!--source src="{{video.v_path}}" type="video/mp4"-->
-</video>
-<p>{{video.v_brief}}</p>
+<!--/video>
+<p>{{video.v_brief}}</p-->
 
-<div>
+<!--div>
     <form method="POST">
         <textarea class="form-control" ng-model="comment_sub.content">{{comment_sub.content}}</textarea>
         <input type="button" class="btn btn-primary" value="发布评论" ng-click="comment_submit()"/>
@@ -18,4 +18,57 @@
             <p>{{comment.content}}</p>
         </li>
     </ul>
+</div-->
+
+<div class="container">
+
+  <div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-2"></div>
+    <div class="col-md-5">
+      <div class="card">
+        <div class="card-body">
+          <video src="{{video.v_path}}" width="400" height="300" style="clear:both;display: block;margin:auto" controls="controls">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <h2><b>{{video.v_title}}</b></h2>
+      <br>
+      <p><small>视频简介：{{video.v_brief}}</small></p>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+
+  <div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <form method="POST">
+            <textarea class="form-control" placeholder="请输入评论" id="comment" ng-model="comment_sub.content">{{comment_sub.content}}</textarea>
+            <br>
+            <input type="button" class="btn btn-primary" value="发布评论" ng-click="comment_submit()"/>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <ul>
+            <li ng-repeat='comment in commentList' class="videolist">
+              <p><font color="green">{{comment.from_uid}}</font>&nbsp;<small>{{comment.date}}</small></p>
+              <p>{{comment.content}}</p>
+              <hr>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

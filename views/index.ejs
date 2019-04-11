@@ -2,8 +2,9 @@
 <html ng-app="WEBSITE" ng-init="USERID=''; isLogin=false">
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
     <link href="stylesheets/sign.css" rel="stylesheet">
 
     <script src="javascripts/angular.js"></script>
@@ -14,30 +15,27 @@
     <script src="js/website.js"></script>
   </head>
   <body>
-      <!--ul class="nav nav-pills">
-          <li role="presentation" class="active"><a href="/#!/">首页</a></li>
-          <li role="presentation" ng-if="!isLogin"><a href="/#!/login">登录</a></li>
-          <li role="presentation" ng-if="!isLogin"><a href="/#!/register">注册</a></li>
-          <li role="presentation" ng-if="isLogin"><a href="/#!/upload">视频上传</a></li>
-          <li role="presentation" ng-if="isLogin"><a href="/#!/user/{{USERID}}">个人中心</a></li>
-          <li role="presentation" ng-if="isLogin"><a href="/#!/logout">退出</a></li>
-        </ul-->
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <a class="navbar-brand" href="/#!/">VPlay</a>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-              <li ng-if="!isLogin"><a href="/#!/register"><sapn class="glyphicon glyphicon-user"></sapn>注册</a></li>
-              <li ng-if="!isLogin"><a href="/#!/login"><sapn class="glyphicon glyphicon-log-in"></sapn>登录</a></li>
-              <li ng-if="isLogin"><a href="/#!/upload"><sapn class="glyphicon glyphicon-upload"></sapn>视频上传</a></li>
-              <li ng-if="isLogin"><a href="/#!/user/{{USERID}}"><sapn class="glyphicon glyphicon-user"></sapn>个人中心</a></li>
-              <li ng-if="isLogin"><a href="/#!/logout"><sapn class="glyphicon glyphicon-log-out"></sapn>退出</a></li>
-            </ul>
-          </div>
-        </nav>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/#!/">VPlay</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li ng-if="!isLogin"><a href="/#!/register"><sapn class="glyphicon glyphicon-user"></sapn>注册</a></li>
+          <li ng-if="!isLogin"><a href="/#!/login"><sapn class="glyphicon glyphicon-log-in"></sapn>登录</a></li>
+          <li ng-if="isLogin"><a href="/#!/upload"><sapn class="glyphicon glyphicon-upload"></sapn>视频上传</a></li>
+          <li ng-if="isLogin"><a href="/#!/user/{{USERID}}"><sapn class="glyphicon glyphicon-user"></sapn>个人中心</a></li>
+          <li ng-if="isLogin"><a href="/#!/logout"><sapn class="glyphicon glyphicon-log-out"></sapn>退出</a></li>
+        </ul>
+      </div>
+    </nav>
 
     <div ng-view> </div>
 
+    <footer class="footer">
+      <div class="container">
+        <div style="height:30px;line-height: 30px;">VPlay@2019</div>
+      </div>
+    </footer>
   </body>
 </html>

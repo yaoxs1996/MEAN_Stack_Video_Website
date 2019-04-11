@@ -68,17 +68,17 @@ function($scope, $resource, $routeParams, $rootScope, $location)
         $scope.comments = comment;
         
     });*/
-    var Comment = $resource('/comment');        //获取评论
+    var Comment = $resource('/comment/:id');        //获取评论
     var Comment_sub = $resource('/comment');        //提交评论
-    Comment.query(function(commentList)
+    Comment.query({id: $routeParams.id}, function(commentList)
     {
-        console.log($scope.USERID);
+        //console.log($scope.USERID);
         $scope.commentList = commentList;
     });
 
     var refresh = function()
     {
-        Comment.query(function(commentList)
+        Comment.query({id: $routeParams.id}, function(commentList)
         {
             //console.log($scope.USERID);
             $scope.comment_sub.content = '';
@@ -99,6 +99,10 @@ function($scope, $resource, $routeParams, $rootScope, $location)
             alert('请先登录');
             $location.path('/login');
         }
+        else if($scope.comment_sub.content == null)
+        {
+            alert('请输入评论！');
+        }
         else
         {
             $scope.comment_sub.v_id = $routeParams.id;
@@ -118,14 +122,39 @@ app.controller('RegCtrl', ['$scope', '$resource', '$location',
 function($scope, $resource, $location)
 {
     //console.log("这里是注册控制器"+Date());
+    var Users = $resource('/api/register');
+    var Users_f = $resource('/api/register/:id');
     $scope.save = function()
     {
-        var Users = $resource('/api/register');
-        Users.save($scope.user, function()
+        if($scope.user.pwd != $scope.user.pwd1)
+        {
+            alert('密码不一致！');
+        }
+        else
+        {
+            Users_f.get({id: $scope.user.u_name}, function(result)
+            {
+                console.log(result);
+                if(result._id != null)
+                {
+                    alert('该用户名已存在！');
+                }
+                else
+                {
+                    Users.save($scope.user, function()
+                    {
+                        alert('注册成功！前往登录');
+                        $location.path('/login');
+                    })
+                }
+            });
+        }
+        
+        /*Users.save($scope.user, function()
         {
             $location.path('/login'); 
-        });
-    }
+        });*/
+    };
 }]);
 
 //用户登录
@@ -140,13 +169,15 @@ function($scope, $resource, $location, $rootScope)
             //console.log(user);
             if(!user._id)
             {
-                $scope.warning = '用户不存在';
+                //$scope.warning = '用户不存在';
+                alert('用户不存在！');
             }
             else
             {
                 if($scope._user.u_pwd != user.u_pwd)
                 {
-                    $scope.warning = '密码错误';
+                    //$scope.warning = '密码错误';
+                    alert('密码错误!');
                 }
                 else
                 {
@@ -210,17 +241,56 @@ function($scope, $resource, $location, $routeParams)
         $scope.user = user;
     });
 
-    $scope.save = function()
+    var refresh = function()
+    {
+        User.get({id: $routeParams.id}, function(user)
+        {
+            $scope.user = user;
+        });
+    };
+
+    $scope.apply_info = function()
     {
         User_update.update($scope.user, function()
         {
             //刷新
-            $location.path('/');
+            alert('信息修改成功');
+            refresh();
         });
     };
 
+    //密码修改
+    $scope.apply_pass = function()
+    {
+        if($scope.user.oldpass == null || $scope.user.newpass == null || $scope.user.newpass_1 == null)
+        {
+            alert('输入栏不能为空！');
+        }
+        else if($scope.user.oldpass != $scope.user.u_pwd)
+        {
+            alert('密码错误！');
+        }
+        else if($scope.user.newpass != $scope.user.newpass_1)
+        {
+            alert('两次输入密码不同！');
+        }
+        else if($scope.user.newpass == $scope.user.oldpass)
+        {
+            alert('新旧密码不能相同！');
+        }
+        else
+        {
+            $scope.user.u_pwd = $scope.user.newpass;
+            User_update.update($scope.user, function()
+            {
+                alert('密码修改成功！');
+                refresh();
+            })
+        }
+    }
+
     //获取用户的视频列表
-    Videos.get({id: $routeParams.id}, function(videos)
+    Videos.query({id: $routeParams.id}, function(videos)
     {
         $scope.videolist = videos;
     });

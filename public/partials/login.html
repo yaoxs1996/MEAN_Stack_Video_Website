@@ -1,34 +1,29 @@
-
-<!--form id="login" method="POST">
-    <div ng-model="warning"><p>{{warning}}</p></div>
-    <div id="uname_text" class="form-group">
-        <input type="text" placeholder="请输入用户名" name="u_name" ng-model="_user.u_name" required>
-    </div>
-    <div id="pwd_text" class="form-group">
-        <input type="password" placeholder="请输入密码" name="u_pwd" ng-model="_user.u_pwd" required>
-    </div>
-    <div id="submit_bg">
-        <button id="submit_btn" type="submit" class="btn btn-secondary btn-lg" ng-click="loginAction()">登录</button>
-    </div>
-</form-->
-
-<!--form id="loginFormInfo" ng-controller="LoginCtrl" ng-submit="loginAction()">
-    <div ng-model="warning"><p>{{warning}}</p></div>
-    <div id="uname_text" class="form-group">
-        <input type="text" placeholder="输入账号" ng-model="user.id" required ng-minlength="1">
-    </div>
-    <div id="pwd_text" class="form-group">
-        <input type="password" placeholder="输入密码" ng-model="user.pwd" required ng-minlength="1">
-    </div>
-    <div id="submit_bg">
-        <button id="submit_btn" type="submit" class="btn btn-secondary btn-lg" ng-disabled="loginFormInfo.$invalid">立即登录</button>
-    </div>
-</form-->
 <div class="container">
-  <form class="form-signin" role="form">
-    <h2 class="form-signin-heading">欢迎登录</h2>
-    <input type="text" class="form-control" placeholder="请输入用户名" name="u_name" ng-model="_user.u_name" required>
-    <input type="password" class="form-control" placeholder="请输入密码" name="u_pwd" ng-model="_user.u_pwd" required>
-    <button type="submit" class="btn btn-primary btn-lg btn-block" ng-click="loginAction()">登录</button>
-  </form>
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">登录</h2>
+          <br>
+          <form class="my-login-validation" role="form">
+            <div class="form-group">
+              <label for="username">用户名</label>
+              <input type="text" class="form-control" id="username" placeholder="请输入用户名" ng-model="_user.u_name" required>
+            </div>
+            <div class="form-group">
+              <label for="password">密码</label>
+              <input type="password" class="form-control" id="password" placeholder="请输入密码" ng-model="_user.u_pwd" required>
+            </div>
+            <br>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block" ng-click="loginAction()">登录</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
 </div>
+
