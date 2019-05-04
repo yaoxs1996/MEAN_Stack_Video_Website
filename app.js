@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var session = require('express-session');
+var multipart = require('connect-multiparty');    //上传相关
 global.db = require('./db/mongo');
 
 var app = express();
@@ -16,6 +17,9 @@ app.use(session({
   secret: 'secret',
   cookie: {maxAge: 1000*60*30}
 }));
+
+//上传相关
+app.use(multipart({uploadDir: 'upload'}));
 
 app.use(function(req, res, next)
 {

@@ -1,6 +1,6 @@
 //主页的相关的配置与控制器
 //本类型文件只允许有一个
-var app = angular.module('WEBSITE', ['ngResource', 'ngRoute']);
+var app = angular.module('WEBSITE', ['ngResource', 'ngRoute', 'ngFileUpload']);
 app.config(['$routeProvider', function($routeProvider)
 {
     $routeProvider
@@ -201,16 +201,43 @@ function($location, $rootScope)
 }]);
 
 //视频上传控制器
-app.controller('UpCtrl', ['$scope', '$resource', '$location', '$rootScope',
-function($scope, $resource, $location, $rootScope)
+app.controller('UpCtrl', ['$scope', '$resource', '$location', '$rootScope', 'Upload', '$timeout',
+function($scope, $resource, $location, $rootScope, Upload, $timeout)
 {
-    $scope.fileChanged = function(ele)
+    /*$scope.fileChanged = function(ele)
     {
         $scope.files = ele.files;
         $scope.$apply();        //传播model的变化
+    };*/
+
+    $scope.uploadPic = function(file)
+    {
+        $scope.video.up_id = $rootScope.USERID;     //用户名初始化
+        
+        file.upload = Upload.upload({
+            url: '/video_upload',
+            data: {videoinfo: $scope.video, file: file},
+        });
+
+        file.upload.then(function(response)
+        {
+            $timeout(function()
+            {
+                file.result = response.data;
+            });
+        }, function(response)
+        {
+            if(response.status > 0)
+            {
+                $scope.errorMsg = response.status + ': ' + response.data;
+            }
+        }, function(evt)
+        {
+            file.process = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        });
     };
 
-    $scope.upload = function()
+    /*$scope.upload = function()
     {
         var Video = $resource('/api/videos');
         //其他相关数据初始化
@@ -223,7 +250,7 @@ function($scope, $resource, $location, $rootScope)
             alert("上传成功，返回首页");
             $location.path('/');
         });
-    };
+    };*/
 }]);
 
 //用户信息控制器
