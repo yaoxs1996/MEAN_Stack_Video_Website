@@ -1,3 +1,5 @@
+//import swal from "_sweetalert@2.1.2@sweetalert";
+
 //主页的相关的配置与控制器
 //本类型文件只允许有一个
 var app = angular.module('WEBSITE', ['ngResource', 'ngRoute', 'ngFileUpload']);
@@ -54,6 +56,14 @@ function($scope, $resource, $rootScope)
         //$rootScope.USERID = "yao";
         $scope.videos = videos;
     });
+
+    /*将登陆验证信息的初始化置于此处 防止页面刷新导致登陆信息丢失*/
+    if($rootScope.isLogin != true)
+    {
+        $rootScope.isLogin = false;
+        $rootScope.USERID = null;
+    }
+    console.log($rootScope.USERID);
 }]);
 
 //视频播放页面控制器
@@ -210,31 +220,68 @@ function($scope, $resource, $location, $rootScope, Upload, $timeout)
         $scope.$apply();        //传播model的变化
     };*/
 
-    $scope.uploadPic = function(file)
+    /*登陆权限控制，防止未登录进入本页面 */
+    if($rootScope.isLogin != true)
     {
-        $scope.video.up_id = $rootScope.USERID;     //用户名初始化
-        
-        file.upload = Upload.upload({
-            url: '/video_upload',
-            data: {videoinfo: $scope.video, file: file},
+        //alert('请先登陆！');
+        swal({
+            title: "请先登陆！",
+            text: "您尚未登录",
+            icon: "error",
+            button: "去登录",
         });
+        $location.path('/login');       //转向登陆页面
+    }
 
-        file.upload.then(function(response)
+    $scope.uploadVideo = function(file)
+    {
+        /*表单验证 */
+        if($scope.video.title == null || $scope.video.brief == null)
         {
-            $timeout(function()
-            {
-                file.result = response.data;
+            swal({
+                title: '请完善所有信息！',
+                icon: 'warning',
+                button: '确定',
             });
-        }, function(response)
+            console.log($scope.video.title);
+        }
+        else
         {
-            if(response.status > 0)
+            $scope.video.up_id = $rootScope.USERID;     //用户名初始化
+        
+            file.upload = Upload.upload({
+                url: '/video_upload',
+                data: {videoinfo: $scope.video, file: file},
+            });
+
+            file.upload.then(function(response)
             {
-                $scope.errorMsg = response.status + ': ' + response.data;
-            }
-        }, function(evt)
-        {
-            file.process = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-        });
+                $timeout(function()
+                {
+                    file.result = response.data;
+                });
+            }, function(response)
+            {
+                if(response.status > 0)
+                {
+                    $scope.errorMsg = response.status + ': ' + response.data;
+                }
+            }, function(evt)
+            {
+                file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            });
+
+            /*弹出信息 */
+            swal({
+                title: '上传成功',
+                text: '是否返回主页？',
+                icon: 'success',
+                buttons: true,
+            }, function()
+            {
+                $location.path('/');
+            });
+        }
     };
 
     /*$scope.upload = function()

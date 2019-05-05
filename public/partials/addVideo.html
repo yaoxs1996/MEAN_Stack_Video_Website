@@ -30,7 +30,7 @@
         <div class="card-body">
           <form name="myForm">
             <fieldset>
-              <legend>视频上传</legend>
+              <legend>选择视频文件</legend>
               
               <!--input type="text" name="userName" ng-model="username" size="31" required>
               <i ng-show="myForm.userName.$error.required">*required</i-->
@@ -43,26 +43,38 @@
                     {{errorFile.size / 1000000|number:1}}MB max 400MB
               </i>
               <video controls ng-show="myForm.file.$valid" ngf-src="file"></video>
-              <button ng-click="videoFile = null" ng-show="videoFile">删除</button>
-              <br>
+              <button ng-click="videoFile = null" ng-show="videoFile" type="button" class="btn btn-danger btn-xs">删除</button>
+              <hr>
               <p>选择分区</p>
-              <select ng-model="video.tag">
+              <select ng-model="video.tag" ng-init="video.tag = 'Game'">
                 <option value="Game">游戏</option>
                 <option value="Life">生活</option>
                 <option value="Technology">科技</option>
                 <option value="FilmNTV">影视</option>
               </select>
+              <hr>
               <p>视频标题</p>
-              <input type="text" class="form-control" aria-describedby="basic-addon1" ng-model="video.title">
+              <input type="text" class="form-control" ng-model="video.title">
               <hr>
               <p>视频简介</p>
               <textarea class="form-control" ng-model="video.brief"></textarea>
-              <button ng-disabled="!myForm.$valid" ng-click="uploadPic(videoFile)">上传</button>
-              <span class="progress" ng-show="videoFile.progress >= 0">
+              <br>
+              <div class="progress" ng-show="videoFile.progress >= 0">
+                <div class="progress-bar" role="progressbar" style="width: {{videoFile.progress}}%" ng-bind="videoFile.progress + '%'"></div>
+                <br>
+              </div>
+              
+              <button ng-disabled="!myForm.$valid" ng-click="uploadVideo(videoFile)" type="button" class="btn btn-primary">上传</button>
+
+              <!--span class="progress" ng-show="videoFile.progress >= 0">
                 <div style="width:{{videoFile.progress}}%" ng-bind="videoFile.progress + '%'"></div>
-              </span>
-              <span ng-show="videoFile.result">上传成功</span>
-              <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+              </span-->
+              <!--Bootstrap编写进度条-->
+              
+              <!--span ng-show="videoFile.result">上传成功</span-->
+              <div ng-show="videoFile.result" class="alert alert-success" role="alert">上传成功</div>
+              <div ng-show="errorMsg" class="alert alert-danger" role="alert">上传失败</div>
+              <!--span class="err" ng-show="errorMsg">{{errorMsg}}</span-->
             </fieldset>
           </form>
           <!--form action="/video_upload" method="POST" enctype="multipart/form-data">

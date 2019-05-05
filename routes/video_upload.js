@@ -58,7 +58,7 @@ router.post('/', multipartMiddleware, function(req, res)
     //同步版rename方法，实现文件移动
     fs.renameSync('./upload/' + filename, './public/videos/' + filename);
 
-    //生成封面
+    /*生成封面*/
     var picname = filename.substring(0, filename.indexOf("."));     //取出无后缀的文件名
     /*FFmpeg命令*/
     var videos_path = "D:\\Projects\\web\\video_website\\public\\videos\\";
@@ -66,6 +66,16 @@ router.post('/', multipartMiddleware, function(req, res)
     var ff_args = " -r 1 -ss 00:00:05 -vframes 1 ";       //FFmpeg参数
     var cmd = "ffmpeg -i " + videos_path + filename + ff_args + pics_path + picname + ".jpg";
     cp.exec(cmd);       //执行命令
+
+    /*删除缓存 */
+    fs.unlink('./upload/' + filename, function(err)
+    {
+        if(err)
+        {
+            return console.error(err);
+        }
+        console.log("缓存删除成功！");
+    });
 
     /*数据库插入*/
     var videoinfo = req.body.videoinfo;
