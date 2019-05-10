@@ -1,0 +1,19 @@
+<div class="container">
+	<div class="row" style="margin-bottom: 25px;">
+		<div class="col-md-2"></div>
+		<!--用户信息展示-->
+		<div class="col-md-8">
+			<div class="card-body">
+				<div class="col-md-10">
+					<p>用户名：<span>{{user.u_name}}</span></p>
+					<p>邮箱：&nbsp;&nbsp;<span>{{user.email}}</span></p>
+				</div>
+				<div class="col-md-2">
+					<button type="button" class="btn btn-success" ng-if="!followStatus" ng-click="follow(user.u_name)">+关注</button>
+					<button type="button" class="btn btn-warning" ng-if="followStatus" ng-click="unfollow(user.u_name)">-取消关注</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+</div>

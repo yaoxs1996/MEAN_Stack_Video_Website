@@ -41,6 +41,11 @@ app.config(['$routeProvider', function($routeProvider)
         templateUrl: 'partials/logout.html',
         controller: 'LogoutCtrl'
     })
+    .when('/space/:id',
+    {
+        templateUrl: 'partials/space.html',
+        controller: 'SpaceCtrl'
+    })
     .otherwise({
         redirectTo: '/'
     });
@@ -63,7 +68,7 @@ function($scope, $resource, $rootScope)
         $rootScope.isLogin = false;
         $rootScope.USERID = null;
     }
-    console.log($rootScope.USERID);
+    //console.log($rootScope.USERID);
 }]);
 
 //视频播放页面控制器
@@ -131,39 +136,56 @@ function($scope, $resource, $routeParams, $rootScope, $location)
 app.controller('RegCtrl', ['$scope', '$resource', '$location',
 function($scope, $resource, $location)
 {
-    //console.log("这里是注册控制器"+Date());
-    var Users = $resource('/api/register');
-    var Users_f = $resource('/api/register/:id');
+    var User = $resource('api/register');
+    /*视图的save方法 */
     $scope.save = function()
     {
-        if($scope.user.pwd != $scope.user.pwd1)
+        /*防止提交空数据 */
+        if($scope.user.u_name == null || $scope.user.pwd == null || $scope.user.pwd1 == null || $scope.user.email == null)
         {
-            alert('密码不一致！');
+            swal({
+                title: '请完成表单！',
+                icon: 'warning',
+                button: true,
+            });
+        }
+        /*表单密码一致性验证 */
+        else if($scope.user.pwd != $scope.user.pwd1)
+        {
+            swal({
+                title: '密码不一致！',
+                icon: 'warning',
+                button: true,
+            });
         }
         else
         {
-            Users_f.get({id: $scope.user.u_name}, function(result)
+            /*调用save方法，调用后台的post方法 */
+            User.save($scope.user, function(user)
             {
-                console.log(result);
-                if(result._id != null)
+                /*判断返回的错误信息 */
+                if(user.errMsg != null)
                 {
-                    alert('该用户名已存在！');
+                    swal({
+                        title: '用户名已存在！',
+                        icon: 'error',
+                        button: true,
+                    });
                 }
+                /*注册成功 */
                 else
                 {
-                    Users.save($scope.user, function()
-                    {
-                        alert('注册成功！前往登录');
-                        $location.path('/login');
-                    })
+                    swal({
+                        title: '注册成功！',
+                        text: '前往登录页面',
+                        icon: 'success',
+                        button: true,
+                    });
+                    /*进入登录页面 */
+                    $location.path('/login');
                 }
             });
         }
-        
-        /*Users.save($scope.user, function()
-        {
-            $location.path('/login'); 
-        });*/
     };
 }]);
 
@@ -174,31 +196,43 @@ function($scope, $resource, $location, $rootScope)
     $scope.loginAction = function()
     {
         var User = $resource('/api/login');
+        /*save(param, payload, sucessFn, errorFn) */
         User.save($scope._user, function(user)
         {
-            //console.log(user);
+            /*用户不存在 */
             if(!user._id)
             {
-                //$scope.warning = '用户不存在';
-                alert('用户不存在！');
+                swal({
+                    title: '错误！',
+                    text: '用户不存在',
+                    icon: 'error',
+                    button: '重新输入'
+                });
             }
+            /*密码不存在 */
+            else if(user.errMsg == '密码错误！')
+            {
+                swal({
+                    title: '错误！',
+                    text: user.errMsg,
+                    icon: 'error',
+                    button: '重新输入',
+                });
+            }
+            /*登录成功 */
             else
             {
-                if($scope._user.u_pwd != user.u_pwd)
-                {
-                    //$scope.warning = '密码错误';
-                    alert('密码错误!');
-                }
-                else
-                {
-                    //获取用户名，更改登录状态
-                    $rootScope.USERID = $scope._user.u_name;
-                    $rootScope.isLogin = true;
-                    $location.path('/'); 
-                }
+                swal({
+                    title: '登录成功！',
+                    icon: 'success',
+                    button: true,
+                })
+                $rootScope.USERID = $scope._user.u_name;
+                $rootScope.isLogin = true;
+                $location.path('/');
             }
         });
-    }
+    };
 }]);
 
 //退出账户
@@ -254,19 +288,20 @@ function($scope, $resource, $location, $rootScope, Upload, $timeout)
                 data: {videoinfo: $scope.video, file: file},
             });
 
-            file.upload.then(function(response)
+            file.upload.then(function(response)     //成功信息
             {
                 $timeout(function()
                 {
                     file.result = response.data;
                 });
-            }, function(response)
+            }, function(response)       //处理错误
             {
                 if(response.status > 0)
                 {
                     $scope.errorMsg = response.status + ': ' + response.data;
                 }
-            }, function(evt)
+                console.log('2.response: ' + response._id);
+            }, function(evt)        //进度通知
             {
                 file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
             });
@@ -277,10 +312,8 @@ function($scope, $resource, $location, $rootScope, Upload, $timeout)
                 text: '是否返回主页？',
                 icon: 'success',
                 buttons: true,
-            }, function()
-            {
-                $location.path('/');
             });
+            //$location.path('/');
         }
     };
 
@@ -370,11 +403,110 @@ function($scope, $resource, $location, $routeParams)
     });
 
     //用户删除视频
-    $scope.video_del = function()
+    var DeleteVideo = $resource('/api/videos/:id');
+    $scope.delete_video = function(_id)
     {
-        Video_delete.delete({id: $scope.xxx}, function(video)
+        DeleteVideo.delete({id: _id}, function(video)
         {
+            swal({
+                title: '删除成功！',
+                icon: 'success',
+                button: true,
+            });
+
             //刷新局部
+            //refresh();
+        });
+    };
+}]);
+
+/*访问其他用户主页对应的控制器 */
+app.controller('SpaceCtrl', ['$scope', '$resource', '$rootScope', '$routeParams',
+function($scope, $resource, $rootScope, $routeParams)
+{
+    /*获取用户个人信息 */
+    var User = $resource('/api/user/:id');
+    User.get({id: $routeParams.id}, function(user)
+    {
+        $scope.user = user;
+    });
+
+    /*获取用户投稿视频 */
+    var Video = $resource('/api/user_videos/:id');
+    Video.query({id: $routeParams.id}, function(videoList)
+    {
+        $scope.videoList = videoList;
+    });
+
+    /*获取用户是否被关注的状态 */
+    var Follow = $resource('/follow/:id');
+    
+    Follow.query({id: $rootScope.USERID}, function(result)
+    {
+        //console.log(result);
+        var flag = false;
+
+        /*判断是否关注 */
+        for(let temp in result)
+        {
+            if(result[temp].follow_id == $routeParams.id)
+            {
+                flag = true;
+            }
+        }
+
+        if(result.errMsg == 'EMPTY_FOLLOW')
+        {
+            $scope.followStatus = false;        //未关注
+        }
+        else
+        {
+            $scope.followStatus = flag;
+        }
+    });
+
+    /*改变关注状态 */
+    /*关注 */
+    $scope.follow = function(followId)
+    {
+        let followInfo = {userId: $rootScope.USERID, followId: followId};
+        var AddFollow = $resource('/follow');
+        AddFollow.save(followInfo, function(result)
+        {
+            /*结果为空，关注失败 */
+            if(!result._id)
+            {
+                swal({
+                    title: '关注失败！',
+                    icon: 'error',
+                    button: true,
+                });
+            }
+            else
+            {
+                swal({
+                    title: '关注成功！',
+                    icon: 'success',
+                    button: true,
+                });
+                $scope.followStatus = true;
+            }
+        });
+    };
+
+    /*取消关注 */
+    $scope.unfollow = function(followId)
+    {
+        let followInfo = {userId: $rootScope.USERID, followId: followId};
+        var DelFollow = $resource('/follow');
+        DelFollow.delete(followInfo, function(result)
+        {
+            swal({
+                title: '取消关注成功！',
+                icon: 'success',
+                button: true,
+            });
+            $scope.followStatus = false;
         });
     };
 }]);

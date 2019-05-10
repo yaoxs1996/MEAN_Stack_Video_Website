@@ -44,7 +44,7 @@ router.post('/', function(req, res)
     //数据库信息插入
     var collection = db.get('videos');
     collection.insert({
-        up_date: new Date(),
+        up_date: new Date().toLocaleString(),
         up_id: req.body.up_id,
         v_tag: req.body.tag,
         v_path: "videos/" + req.body.videoname,
@@ -59,6 +59,53 @@ router.post('/', function(req, res)
         {
             throw err;
         }
+        res.json(video);
+    });
+});
+
+/*删除视频 */
+router.delete('/:id', function(req, res)
+{
+    var collection = db.get('videos');
+    var videoname;
+    var picname;
+
+    collection.findOne({_id: req.params.id}, function(err, video)
+    {
+        if(err)
+        {
+            throw err;
+        }
+
+        videoname = video.v_path;
+        picname = video.v_coverage;
+        
+        /*删除视频文件以及封面 */
+        fs.unlink('./public/' + picname, function(err)
+        {
+            if(err)
+            {
+                return console.error(err);
+            }
+            console.log('封面删除成功！');
+        });
+        fs.unlink('./public/' + videoname, function(err)
+        {
+            if(err)
+            {
+                return console.error(err);
+            }
+            console.log('视频删除成功！');
+        });
+    });
+
+    collection.remove({_id: req.params.id}, function(err, video)
+    {
+        if(err)
+        {
+            throw err;
+        }
+
         res.json(video);
     });
 });

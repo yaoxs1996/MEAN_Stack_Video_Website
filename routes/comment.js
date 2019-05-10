@@ -44,7 +44,7 @@ router.post('/', function(req, res)
         v_id: req.body.v_id,
         content: req.body.content,
         from_uid: req.body.from_uid,
-        date: new Date(),
+        date: new Date().toLocaleString(),
     },
     function(err, comment)
     {

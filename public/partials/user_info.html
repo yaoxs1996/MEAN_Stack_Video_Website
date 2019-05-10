@@ -77,6 +77,7 @@
                 <img ng-src="{{video.v_coverage}}" alt="pic" width="160" height="100">
                 </a>
                 <p>{{video.v_title}}</p>
+                <button type="button" class="btn btn-danger" ng-click="delete_video(video._id)">删除</button>
               </div>
             </li>
           </ul>

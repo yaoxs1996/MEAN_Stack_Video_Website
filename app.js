@@ -79,6 +79,14 @@ app.use('/api/user', userinfoRouter);
 var userVideoRouter = require('./routes/user_videos');
 app.use('/api/user_videos', userVideoRouter);
 
+/*关注功能 */
+var followRouter = require('./routes/follow');
+app.use('/follow', followRouter);
+
+/*动态功能 */
+var dynamicsRouter = require('./routes/dynamics');
+app.use('/dynamics', dynamicsRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

@@ -20,27 +20,42 @@ router.get('/:id', function(req, res)
 //注册功能
 router.post('/', function(req, res)
 {
-    //console.log(req.body);
     var collection = db.get('users');
-    //判断用户名是否已存在
-    //var username = req.body.u_name;
     
-    collection.insert(
+    /*先使用findOne方法 */
+    collection.findOne({u_name: req.body.u_name}, function(err, user)
+    {
+        if(err)
         {
-            u_name: req.body.u_name,
-            u_pwd: req.body.pwd,
-            email: req.body.email
-        },
-        function(err, user)
+            res.send(500);
+            throw err;
+        }
+
+        /*用户名已存在 */
+        if(user != null)
         {
-            if(err)
-            {
-                throw err;
-            }
+            user.errMsg = 'ACC_EXIST';      //账户已存在
             res.json(user);
         }
-    );
+        /*默认情况 用户名未使用 */
+        else if(user == null)
+        {
+            /*执行insert方法 */
+            collection.insert({
+                u_name: req.body.u_name,
+                u_pwd: req.body.pwd,
+                email: req.body.email
+            }, function(err, ret_user)
+            {
+                if(err)
+                {
+                    res.send(500);
+                    throw err;
+                }
+                res.json(ret_user);
+            });
+        }
+    });
 });
-
 
 module.exports = router;

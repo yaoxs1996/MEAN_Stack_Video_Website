@@ -13,30 +13,27 @@ router.post('/', function(req, res)
 			res.send(500);		//服务器内部错误
 			throw err;
 		}
-		/*else if(!user)
+
+		/*用户名不存在 */
+		if(user == null)
 		{
-			req.session.error = '用户不存在';
-			console.log('用户不存在');
-			res.send(404);
+			res.json(user);
+		}
+		/*密码错误 */
+		else if(user.u_pwd != req.body.u_pwd)
+		{
+			user.status = '404';
+			user.errMsg = '密码错误！';
+			user.u_pwd = null;
+			res.json(user);
 		}
 		else
 		{
-			if(user.u_pwd != req.body.u_pwd)
-			{
-				req.session.error = '密码错误';
-				//res.render('index', {message: '密码错误'});
-				console.log('密码错误');
-				res.send(404);
-			}
-			else
-			{
-				req.session.user = user;
-				//res.json(user);
-				//res.send(200);
-				res.status(200).json(user);
-			}
-		}*/
-		res.status(200).json(user);
+			user.status = '200';
+			user.errMsg = null;
+			user.u_pwd = null;
+			res.status(200).json(user);
+		}
 	});
 });
 
