@@ -50,15 +50,29 @@ router.delete('/', function(req, res)
 {
     var collection = db.get('follow');
 
-    collection.remove({user_id: req.query.userId, follow_id: req.query.followId},
-    function(err, follow)
+    if(req.query.id != null)
     {
-        if(err)
+        collection.remove({_id: req.query.id}, function(err, follow)
         {
-            throw err;
-        }
-        res.json(follow);
-    });
+            if(err)
+            {
+                throw err;
+            }
+            res.json(follow);
+        });
+    }
+    else
+    {
+        collection.remove({user_id: req.query.userId, follow_id: req.query.followId},
+        function(err, follow)
+        {
+            if(err)
+            {
+                throw err;
+            }
+            res.json(follow);
+        });
+    }
 });
 
 module.exports = router;

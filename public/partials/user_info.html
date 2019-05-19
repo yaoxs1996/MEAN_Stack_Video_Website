@@ -1,3 +1,10 @@
+<!-- 路径导航-->
+<ul class="breadcrumb">
+  <li><a href="/#!/">首页</a></li>
+  <li>个人中心</li>
+  <li class="active">个人信息</li>
+</ul>
+
 <div class="container">
   <div class="row" style="margin-bottom: 25px;">
     <div class="col-md-2"></div>
@@ -8,12 +15,29 @@
           <form name="infoForm" novalidate>
             <table>
               <tr>
+                <td><div style="height:48px;line-height: 48px;"><p>头像：</p></div></td>
+                <td><div style="height:48px;line-height: 48px;">
+                  <select name="avatar" ng-model="user.avatar" ng-init="user.avatar = 'avatar/321_146_146.png'">
+                    <option value="avatar/321_146_146.png">321</option>
+                    <option value="avatar/322_146_146.png">322</option>
+                    <option value="avatar/323_146_146.png">323</option>
+                    <option value="avatar/324_146_146.png">324</option>
+                    <option value="avatar/325_146_146.png">325</option>
+                    <option value="avatar/326_146_146.png">326</option>
+                    <option value="avatar/327_146_146.png">327</option>
+                    <option value="avatar/328_146_146.png">328</option>
+                    <option value="avatar/329_146_146.png">329</option>
+                    <option value="avatar/330_146_146.png">330</option>
+                  </select></div></td>
+                <td><div style="height:48px;line-height: 48px;"><img name="img" ng-src="{{user.avatar}}" width="48px" height="48px"></div></td>
+              </tr>
+              <tr>
                 <td><div style="height:40px;line-height: 40px;"><p>用户名：</p></div></td>
                 <td><div style="height:40px;line-height: 40px;">{{user.u_name}}</div></td>
               </tr>
               <tr>
                 <td><div style="height:40px;line-height: 40px;"><p>邮  箱：</p></div></td>
-                <td><div style="height:40px;line-height: 40px;"><input type="email" class="form-control" style="width:400px;" ng-model="user.email"></div></td>
+                <td><div style="height:40px;line-height: 40px;"><input type="email" class="form-control" style="width:250px;" ng-model="user.email"></div></td>
                 <span style="color:red" ng-show="infoForm.user.email.$dirty && infoForm.user.email.$invalid">
                 <span ng-show="infoForm.user.email.$error.required">邮箱不可为空</span>
                 <span ng-show="infoForm.user.email.$error.email">非法邮箱</span>
@@ -59,6 +83,31 @@
             </tr>
           </table>
           <button type="button" class="btn btn-primary" ng-click="apply_pass()">提交密码</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--我的关注列表-->
+  <div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">我的关注</div>
+        <div class="card-body">
+          <ul>
+            <li ng-repeat="follow in followList" class="videolist">
+              <div class="col-md-1">
+                <p>{{follow.follow_id}}</p>
+              </div>
+              <div class="col-md-10">
+                <button type="button" class="btn btn-warning btn-sm" ng-click="unfollow(follow._id)">-取消关注</button>
+              </div>
+              <br>
+              <br>
+            </li>
+          </ul>
+          <p ng-if="isNull">您暂时没有关注任何人</p>
         </div>
       </div>
     </div>

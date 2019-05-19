@@ -8,6 +8,7 @@ var db = monk('localhost:27017/website');
 router.get('/', function(req, res)
 {
     var collection = db.get('dynamics');
+   
     collection.find({}, function(err, dynamicsList)
     {
         if(err)

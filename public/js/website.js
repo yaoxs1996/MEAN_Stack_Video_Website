@@ -46,10 +46,47 @@ app.config(['$routeProvider', function($routeProvider)
         templateUrl: 'partials/space.html',
         controller: 'SpaceCtrl'
     })
+    .when('/dynamics/:id',
+    {
+        templateUrl: 'partials/dynamics.html',
+        controller: 'DynamicsCtrl'
+    })
+    .when('/notification/:id',
+    {
+        templateUrl: 'partials/notification.html',
+        controller: 'NotiCtrl'
+    })
     .otherwise({
         redirectTo: '/'
     });
 }]);
+
+/*自定义过滤器 */
+/*获取自己的关注列表 */
+/*删除自己未关注的用户的动态*/
+app.filter("getMyFollowList", function($rootScope)
+{
+    return function(input)
+    {
+        for(let i in input)
+        {
+            var flag = false;       //标记对应用户是否出现在关注列表中
+            for(let j in $rootScope.myFollowList)
+            {
+                if(input[i].user_id == $rootScope.myFollowList[j].follow_id)
+                {
+                    flag = true;
+                }
+            }
+
+            if(flag == false)
+            {
+                input.splice(i, 1);     //将未关注的用户从对象中删除
+            }
+        }
+        return input;
+    };
+});
 
 //主页获取视频封面的控制器
 app.controller('HomeCtrl', ['$scope', '$resource', '$rootScope',
@@ -58,7 +95,6 @@ function($scope, $resource, $rootScope)
     var Videos = $resource('/api/videos');
     Videos.query(function(videos)
     {
-        //$rootScope.USERID = "yao";
         $scope.videos = videos;
     });
 
@@ -68,7 +104,6 @@ function($scope, $resource, $rootScope)
         $rootScope.isLogin = false;
         $rootScope.USERID = null;
     }
-    //console.log($rootScope.USERID);
 }]);
 
 //视频播放页面控制器
@@ -76,26 +111,27 @@ app.controller('PlayCtrl', ['$scope', '$resource', '$routeParams', '$rootScope',
 function($scope, $resource, $routeParams, $rootScope, $location)
 {
     var Videos = $resource('/api/videos/:id');
-    //var Comment = $resource('/comment/:id');
-    /*Comment.query({id: $routeParams.id}, function(comment)
-    {
-        console.log(comment);
-        $scope.comments = comment;
-        
-    });*/
     var Comment = $resource('/comment/:id');        //获取评论
     var Comment_sub = $resource('/comment');        //提交评论
     Comment.query({id: $routeParams.id}, function(commentList)
     {
-        //console.log($scope.USERID);
         $scope.commentList = commentList;
+
+        /*评论为空 */
+        if(commentList.length == 0)
+        {
+            $scope.isNull = true;
+        }
+        else
+        {
+            $scope.isNull = false;
+        }
     });
 
     var refresh = function()
     {
         Comment.query({id: $routeParams.id}, function(commentList)
         {
-            //console.log($scope.USERID);
             $scope.comment_sub.content = '';
             $scope.commentList = commentList;
         });
@@ -103,12 +139,13 @@ function($scope, $resource, $routeParams, $rootScope, $location)
 
     Videos.get({id: $routeParams.id}, function(video)
     {
-        //console.log(video);
         $scope.video = video;
     });
     
-    $scope.comment_submit = function()
+    $scope.comment_submit = function(comment_sub)
     {
+        $scope.comment_sub = comment_sub;
+        //console.log($scope.comment_sub);
         if(!$rootScope.isLogin)
         {
             alert('请先登录');
@@ -122,10 +159,9 @@ function($scope, $resource, $routeParams, $rootScope, $location)
         {
             $scope.comment_sub.v_id = $routeParams.id;
             $scope.comment_sub.from_uid = $rootScope.USERID;
+            $scope.comment_sub.avatar = $rootScope.AVATAR;
             Comment_sub.save($scope.comment_sub, function(commentList)
             {
-                //留在本页面，提交评论后立即就能在页面上显示出来
-                //$scope.commentList = commentList;
                 refresh();
             });
         }
@@ -229,6 +265,7 @@ function($scope, $resource, $location, $rootScope)
                 })
                 $rootScope.USERID = $scope._user.u_name;
                 $rootScope.isLogin = true;
+                $rootScope.AVATAR = user.avatar;
                 $location.path('/');
             }
         });
@@ -241,6 +278,10 @@ function($location, $rootScope)
 {
     $rootScope.USERID = '';
     $rootScope.isLogin = false;
+    swal({
+        text: '退出成功！',
+        icon: 'success',
+    });
     $location.path('/');
 }]);
 
@@ -248,13 +289,6 @@ function($location, $rootScope)
 app.controller('UpCtrl', ['$scope', '$resource', '$location', '$rootScope', 'Upload', '$timeout',
 function($scope, $resource, $location, $rootScope, Upload, $timeout)
 {
-    /*$scope.fileChanged = function(ele)
-    {
-        $scope.files = ele.files;
-        $scope.$apply();        //传播model的变化
-    };*/
-
-    /*登陆权限控制，防止未登录进入本页面 */
     if($rootScope.isLogin != true)
     {
         //alert('请先登陆！');
@@ -282,6 +316,7 @@ function($scope, $resource, $location, $rootScope, Upload, $timeout)
         else
         {
             $scope.video.up_id = $rootScope.USERID;     //用户名初始化
+            $scope.video.avatar = $rootScope.AVATAR;
         
             file.upload = Upload.upload({
                 url: '/video_upload',
@@ -334,8 +369,8 @@ function($scope, $resource, $location, $rootScope, Upload, $timeout)
 }]);
 
 //用户信息控制器
-app.controller('UserCtrl', ['$scope', '$resource', '$location', '$routeParams',
-function($scope, $resource, $location, $routeParams)
+app.controller('UserCtrl', ['$scope', '$resource', '$location', '$routeParams','$rootScope',
+function($scope, $resource, $location, $routeParams, $rootScope)
 {
     var User = $resource('/api/user/:id');
     var User_update = $resource('/api/user/:id', {id: '@u_name'}, {update: {method: 'PUT'}});
@@ -346,6 +381,7 @@ function($scope, $resource, $location, $routeParams)
     User.get({id: $routeParams.id}, function(user)
     {
         $scope.user = user;
+        //$rootScope.USER = user;
     });
 
     var refresh = function()
@@ -358,6 +394,7 @@ function($scope, $resource, $location, $routeParams)
 
     $scope.apply_info = function()
     {
+        $scope.user.avatar
         User_update.update($scope.user, function()
         {
             //刷新
@@ -402,6 +439,14 @@ function($scope, $resource, $location, $routeParams)
         $scope.videolist = videos;
     });
 
+    var refresh = function()
+    {
+        Videos.query({id: $routeParams.id}, function(videos)
+        {
+            $scope.videolist = videos;
+        });
+    };
+
     //用户删除视频
     var DeleteVideo = $resource('/api/videos/:id');
     $scope.delete_video = function(_id)
@@ -415,14 +460,65 @@ function($scope, $resource, $location, $routeParams)
             });
 
             //刷新局部
-            //refresh();
+            refresh();
+        });
+    };
+
+    /*获取关注列表 */
+    var Follow = $resource('/follow/:id');
+    Follow.query({id: $rootScope.USERID}, function(result)
+    {
+        $scope.followList = result;
+
+        //console.log(result.length);
+        /*判断关注列表是否为空 */
+        if(result.length == 0)
+        {
+            $scope.isNull = true;
+        }
+        else
+        {
+            $scope.isNull = false;
+        }
+    });
+
+    var fol_refresh = function()
+    {
+        Follow.query({id: $rootScope.USERID}, function(result)
+        {
+            $scope.followList = result;
+            /*判断关注列表是否为空 */
+            if(result.length == 0)
+            {
+                $scope.isNull = true;
+            }
+            else
+            {
+                $scope.isNull = false;
+            }
+        });
+    };
+
+    /*取消关注 */
+    $scope.unfollow = function(_id)
+    {
+        var DelFollow = $resource('/follow');
+        let followInfo = {id: _id};
+        DelFollow.delete(followInfo, function(result)
+        {
+            swal({
+                title: '取消关注成功！',
+                icon: 'success',
+                button: true,
+            });
+            fol_refresh();
         });
     };
 }]);
 
 /*访问其他用户主页对应的控制器 */
-app.controller('SpaceCtrl', ['$scope', '$resource', '$rootScope', '$routeParams',
-function($scope, $resource, $rootScope, $routeParams)
+app.controller('SpaceCtrl', ['$scope', '$resource', '$rootScope', '$routeParams', '$location',
+function($scope, $resource, $rootScope, $routeParams, $location)
 {
     /*获取用户个人信息 */
     var User = $resource('/api/user/:id');
@@ -509,4 +605,125 @@ function($scope, $resource, $rootScope, $routeParams)
             $scope.followStatus = false;
         });
     };
+
+    /*留言板块 */
+    /*获取留言 */
+    var MsgBoard = $resource('/msgBoard/:id');
+    MsgBoard.query({id: $routeParams.id}, function(msgList)
+    {
+        $scope.msgList = msgList;
+    });
+
+    var msgReload = function()
+    {
+        MsgBoard.query({id: $routeParams.id}, function(msgList)
+        {
+            $scope.msgList = msgList;
+        });
+    };
+
+    /*发布留言 */
+    var SendMsg = $resource('/msgBoard');
+    $scope.leave_msg = function(upMsg)
+    {
+        if($rootScope.isLogin == false)
+        {
+            swal({
+                text: '请先登录！',
+                icon: 'warning',
+                button: true,
+            });
+            $location.path('/login');
+        }
+        else
+        {
+            $scope.upMsg = upMsg;
+            $scope.upMsg.up_id = $routeParams.id;
+            $scope.upMsg.user_id = $rootScope.USERID;
+            $scope.upMsg.avatar = $rootScope.AVATAR;
+            //$scope.upMsg.content = content;
+
+            SendMsg.save($scope.upMsg, function(result)
+            {
+                if(!result._id)
+                {
+                    swal({
+                        text: '留言失败！',
+                        icon: 'error',
+                        button: true,
+                    });
+                }
+                else
+                {
+                    swal({
+                        text: '留言成功！',
+                        icon: 'success',
+                        button: true,
+                    });
+                    $scope.upMsg.content = '';
+                    msgReload();
+                }
+            });
+        }
+    };
+}]);
+
+/*动态页面对应的控制器 */
+app.controller('DynamicsCtrl', ['$scope', '$resource', '$rootScope', '$routeParams',
+function($scope, $resource, $rootScope, $routeParams)
+{
+    /*获取动态 */
+    var Dynamics = $resource('/dynamics');
+    var Follow = $resource('/follow/:id');      //获取关注列表，筛选动态
+
+    Follow.query({id: $routeParams.id}, function(followList)
+    {
+        $rootScope.myFollowList = followList;       //作为全局对象，将结果传递给过滤器
+    });
+
+    Dynamics.query(function(dynamicsList)
+    {
+        $scope.dynamicsList = dynamicsList;
+
+        console.log(dynamicsList.length);
+        if(dynamicsList.length == 0)
+        {
+            $scope.dyIsNull = true;
+        }
+        else
+        {
+            $scope.dyIsNull = false;
+        }
+    });    
+}]);
+
+/*消息通知页面的控制器 */
+app.controller('NotiCtrl', ['$scope', '$resource', '$rootScope', '$routeParams', '$location',
+function($scope, $resource, $rootScope, $routeParams, $location)
+{
+    /*登录验证 */
+    if($rootScope.isLogin == false)
+    {
+        swal({
+            text: '请先登录！',
+            icon: 'warning',
+        });
+        $location.path('/login');
+    }
+
+    /*获取消息*/
+    var Noti = $resource('/notification/:id');
+    Noti.query({id: $routeParams.id}, function(notiList)
+    {
+        $scope.notiList = notiList;
+
+        if(notiList.length == 0)
+        {
+            $scope.notiIsNull = true;
+        }
+        else
+        {
+            $scope.notiIsNull = false;
+        }
+    });
 }]);

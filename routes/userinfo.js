@@ -28,7 +28,8 @@ router.put('/:id', function(req, res)
         u_name: req.body.u_name,
         u_pwd: req.body.u_pwd,
         sex: req.body.sex,
-        email: req.body.email
+        email: req.body.email,
+        avatar: req.body.avatar
         //birth: req.body.birth
     }, function(err, user)
     {

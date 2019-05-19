@@ -45,6 +45,7 @@ router.post('/', function(req, res)
         content: req.body.content,
         from_uid: req.body.from_uid,
         date: new Date().toLocaleString(),
+        avatar: req.body.avatar
     },
     function(err, comment)
     {

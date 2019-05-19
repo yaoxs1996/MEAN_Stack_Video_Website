@@ -1,3 +1,8 @@
+<!-- 路径导航-->
+<ul class="breadcrumb">
+  <li class="active">首页</li>
+</ul>
+
 <div class="container">
 
   <div class="row" style="margin-bottom: 25px;">
@@ -107,6 +112,28 @@
       </div>
       </div>
     </div>
-    <div class="col-sm-2"></div>
+    <!--bilibili样式-->
+    <!--div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <ul>
+            <li ng-repeat="video in videos" class="videolist">
+              <div class="ebox">
+                <a href="/#!/video/{{video._id}}">
+                  <div class="lazy-img">
+                    <img ng-src="{{video.v_coverage}}" width="108" height="130">
+                  </div>
+                  <p class="etitle">{{video.v_title}}</p>
+                </a>
+                <div class="dlo">
+                  <a href="/#!/space/{{video.up_id}}" class="author">{{video.up_id}}</a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div-->
+    <div class="col-md-2"></div>
 	</div>
 </div>

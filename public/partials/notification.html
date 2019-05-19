@@ -1,0 +1,54 @@
+<!-- 路径导航-->
+<ul class="breadcrumb">
+  <li><a href="/#!/">首页</a></li>
+  <li>个人中心</li>
+  <li class="active">消息通知</li>
+</ul>
+<div class="container-fluid">
+  <!--消息展示-->
+  <div class="row" style="margin-bottom: 25px;">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h2>消息通知</h2>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li ng-repeat="noti in notiList | orderBy: 'noti.noti_time'" class="videolist">
+              <!--根据消息类型-->
+              <div ng-switch="noti.type">
+                <!--有留言-->
+                <div ng-switch-when="msg" class="mycard reply-item">
+                  <div class="top">
+                    <div class="top-left">
+                      <a href="/#!/space/{{noti.sla_id}}" class="avatar" style="background-image: url(avatar/default.png)"></a>
+                    </div>
+                    <div class="top-right">
+                      <div class="name-box">
+                        <a href="/#!/space/{{noti.sla_id}}" class="name">{{noti.sla_id}}</a>
+                        <span class="time">{{noti.noti_time}}</span>
+                      </div>
+                      <div class="comment-content">
+                        <span class="text">
+                          <a href="/#!/space/{{USERID}}" class="link">留言</a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <!--p>{{noti.noti_time}}</p>
+                  <p>{{noti.sla_id}}给您<span><a href="/#!/space/{{USERID}}">留言</a></span>了</p-->
+                </div>
+                <!--默认情况-->
+                <div ng-switch-default>
+                  <p>您暂时没有收到任何消息</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <p ng-if="notiIsNull">您暂时没有新消息</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

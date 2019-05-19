@@ -14,7 +14,8 @@
     <script src="javascripts/ng-file-upload-shim.js"></script>
     <script src="javascripts/ng-file-upload.js"></script>
     <script src="javascripts/sweetalert.min.js"></script>
-    <!--script src="javascripts/jquery-3.3.1.min.js"></script-->
+    <script src="javascripts/jquery-3.3.1.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
     
     <script src="js/website.js"></script>
   </head>
@@ -28,13 +29,25 @@
           <li ng-if="!isLogin"><a href="/#!/register"><sapn class="glyphicon glyphicon-user"></sapn>注册</a></li>
           <li ng-if="!isLogin"><a href="/#!/login"><sapn class="glyphicon glyphicon-log-in"></sapn>登录</a></li>
           <li ng-if="isLogin"><a href="/#!/upload"><sapn class="glyphicon glyphicon-upload"></sapn>视频上传</a></li>
-          <li ng-if="isLogin"><a href="/#!/user/{{USERID}}"><sapn class="glyphicon glyphicon-user"></sapn>个人中心</a></li>
+          <!--li ng-if="isLogin"><a href="/#!/user/{{USERID}}"><sapn class="glyphicon glyphicon-user"></sapn>个人中心</a></li>
+          <li ng-if="isLogin"><a href="/#!/dynamics/{{USERID}}"><sapn class="glyphicon glyphicon-user"></sapn>动态</a></li-->
+          <li class="dropdown" ng-if="isLogin">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+              个人中心
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/#!/user/{{USERID}}">个人信息</a></li>
+              <li><a href="/#!/dynamics/{{USERID}}">动态</a></li>
+              <li><a href="/#!/notification/{{USERID}}">消息通知</a></li>
+            </ul>
+          </li>
           <li ng-if="isLogin"><a href="/#!/logout"><sapn class="glyphicon glyphicon-log-out"></sapn>退出</a></li>
         </ul>
       </div>
     </nav>
 
-    <div ng-view> </div>
+    <div ng-view id="ng-view"> </div>
 
     <footer class="footer">
       <div class="container">

@@ -78,6 +78,8 @@ router.post('/', multipartMiddleware, function(req, res)
             user_id: videoinfo.up_id,
             video_id: JSON.stringify(videoId),
             update_time: new Date().toLocaleString(),
+            v_coverage: JSON.stringify(video.v_coverage),
+            avatar: videoinfo.avatar,
             isRead: false
         }, function(err, dynamics)
         {

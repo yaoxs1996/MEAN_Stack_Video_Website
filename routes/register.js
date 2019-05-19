@@ -44,7 +44,8 @@ router.post('/', function(req, res)
             collection.insert({
                 u_name: req.body.u_name,
                 u_pwd: req.body.pwd,
-                email: req.body.email
+                email: req.body.email,
+                avatar: "avatar/default.png"
             }, function(err, ret_user)
             {
                 if(err)

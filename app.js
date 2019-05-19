@@ -87,6 +87,14 @@ app.use('/follow', followRouter);
 var dynamicsRouter = require('./routes/dynamics');
 app.use('/dynamics', dynamicsRouter);
 
+/*空间留言 */
+var msgRouter = require('./routes/msgBoard');
+app.use('/msgBoard', msgRouter);
+
+/*消息通知 */
+var notiRouter = require('./routes/notification');
+app.use('/notification', notiRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

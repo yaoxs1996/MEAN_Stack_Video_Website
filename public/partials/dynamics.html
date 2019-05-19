@@ -1,0 +1,52 @@
+<!-- 路径导航-->
+<ul class="breadcrumb">
+  <li><a href="/#!/">首页</a></li>
+  <li>个人中心</li>
+  <li class="active">动态</li>
+</ul>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div class="dy-card" style="margin-top:0px;border-top:1px solid rgb(238,238,238);" ng-repeat="dynamics in dynamicsList | getMyFollowList | orderBy: 'dynamics.update_time':true">
+        <a href="/#!/space/{{dynamics.user_id}}" class="user-head c-pointer" style="background-image:url('../avatar/default.png');border-radius:50%;"></a>
+        <div class="main-content" style="padding-bottom: 0px;">
+          <p class="user-name fs-16 ls-0 d-i-block">
+            <a href="/#!/space/{{dynamics.user_id}}" class="c-pointer">{{dynamics.user_id}}</a>
+          </p>
+          <p class="time fs-16 ls-0 tc-slate">{{dynamics.update_time}}</p>
+          <div class="card-content">
+            <div class="post-content">
+              <div class="original-card-content">
+                <div class="video-container can-hover">
+                  <a href="/#!/video/{{dynamics.video_id}}">
+                    <div class="video-wrap">
+                      <div class="image-area">
+                        <div class="types">投稿视频</div>
+                        <img ng-src="{{dynamics.v_coverage}}" width="200" height="120">
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--div class="card">
+        <div class="card-header">动态</div>
+        <div class="card-body">
+          <ul>
+            <li ng-repeat="dynamics in dynamicsList | getMyFollowList" class="videolist">
+              <p>{{dynamics.user_id}}<sapn>{{dynamics.update_time}}</sapn>发布了</p>
+              <a href="/#!/video/{{dynamics.video_id}}">视频</a>
+            </li>
+          </ul>
+          <p ng-if="dyIsNull">暂无动态</p>
+        </div>
+      </div-->
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
