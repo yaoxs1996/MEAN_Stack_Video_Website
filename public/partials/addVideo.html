@@ -1,23 +1,3 @@
-<!--div class="container" style="border:1px solid #ddd">
-<form action="/video_upload" method="POST" enctype="multipart/form-data">
-    <div class="form-line">
-        <label>请选择视频文件：</label><span class="small-tip">视频文件暂只支持.mp4格式</span>
-        <input id="files" type="file" name="file" ng-src={{files[0].name}} onchange="angular.element(this).scope().fileChanged(this)"/>
-    </div>
-    <p>分区</p>
-    <select ng-model="video.tag">
-        <option value="Game">游戏</option>
-        <option value="Life">生活</option>
-        <option value="Technology">科技</option>
-        <option value="FilmNTV">影视</option>
-    </select>
-    <p>标题</p>
-    <input type="text" class="form-control" aria-describedby="basic-addon1" ng-model="video.title">
-    <p>简介</p>
-    <textarea class="form-control" ng-model="video.brief"></textarea>
-    <button type="submit" ng-click="upload()">投稿</button>
-</form>
-</div-->
 <!-- 路径导航-->
 <ul class="breadcrumb">
   <li><a href="/#!/">首页</a></li>
@@ -25,85 +5,104 @@
 </ul>
 
 <div class="container">
-  <div class="row" style="margin-bottom: 25px;">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
+  <div class="row my-row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
       <div class="card">
         <div class="card-header">
           <h2>视频投稿</h2>
         </div>
         <div class="card-body">
           <form name="myForm">
-            <fieldset>
-              <legend>选择视频文件</legend>
-              
-              <!--input type="text" name="userName" ng-model="username" size="31" required>
-              <i ng-show="myForm.userName.$error.required">*required</i-->
-              <br>视频:
-              <input type="file" ngf-select ng-model="videoFile" name="file"
+            <div class="upload-v2-container">
+              <div class="upload-v2-step2-container">
+                <div class="file-list-v2-container">
+                  <div class="file-title">
+                    <h1 data-v-3e>文件上传</h1>
+                    <p>（支持MP4格式，文件大小400MB以内）</p>
+                  </div>
+                  <div class="file-list-v2-wrp">
+                    <input type="file" ngf-select ng-model="videoFile" name="file"
                     accept="video/*" ngf-max-size="400MB" required
                     ngf-model-invalid="errorFile">
-              <i ng-show="myForm.file.$error.required">*required</i>
-              <i ng-show="myForm.file.$error.maxSize">文件过大
-                    {{errorFile.size / 1000000|number:1}}MB max 400MB
-              </i>
-              <video controls ng-show="myForm.file.$valid" ngf-src="file"></video>
-              <button ng-click="videoFile = null" ng-show="videoFile" type="button" class="btn btn-danger btn-xs">删除</button>
-              <hr>
-              <p>选择分区</p>
-              <select ng-model="video.tag" ng-init="video.tag = 'Game'">
-                <option value="Game">游戏</option>
-                <option value="Life">生活</option>
-                <option value="Technology">科技</option>
-                <option value="FilmNTV">影视</option>
-              </select>
-              <hr>
-              <p>视频标题</p>
-              <input type="text" class="form-control" ng-model="video.title">
-              <hr>
-              <p>视频简介</p>
-              <textarea class="form-control" ng-model="video.brief"></textarea>
-              <br>
-              <div class="progress" ng-show="videoFile.progress >= 0">
-                <div class="progress-bar" role="progressbar" style="width: {{videoFile.progress}}%" ng-bind="videoFile.progress + '%'"></div>
-                <br>
+                    <i ng-show="myForm.file.$error.required">*required</i>
+                    <i ng-show="myForm.file.$error.maxSize">文件过大
+                          {{errorFile.size / 1000000|number:1}}MB max 400MB
+                    </i>
+                    <video controls ng-show="myForm.file.$valid" ngf-src="file"></video>
+                    <button ng-click="videoFile = null" ng-show="videoFile" type="button" class="btn btn-danger btn-xs">删除</button>
+                  </div>
+                  <div class="dividing-line"></div>
+                </div>
+                <div class="file-content-v2-container">
+                  <div class="normal-v2-container">
+                    <div class="normal-title-wrp">
+                      <h1 data-v-3e>基本信息</h1>
+                    </div>
+                    <!--分区-->
+                    <div class="type-list-v2-container" id="type-list-v2-container">
+                      <div class="section-title-v2-container">
+                        <p data-v-70 class="section-title-v2-deg">*</p>
+                        <h3 class="section-title-v2-content-main">分区</h3>
+                      </div>
+                      <div class="type-list-v2-selector-wrp">
+                        <div class="select-box-v2-container">
+                          <select ng-model="video.tag" ng-init="video.tag = 'Game'">
+                            <option value="Game">游戏</option>
+                            <option value="Life">生活</option>
+                            <option value="Technology">科技</option>
+                            <option value="FilmNTV">影视</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-v2-normal-line-white-divide"></div>
+                    <!--标题-->
+                    <div class="content-title-v2-container">
+                      <div class="section-title-v2-container">
+                        <p data-v-70 class="section-title-v2-deg">*</p>
+                        <h3 class="section-title-v2-content-main">标题</h3>
+                      </div>
+                      <div class="content-title-v2-input-wrp">
+                        <div class="input-box-v2-1-container">
+                          <div class="input-box-v2-1-instance">
+                            <input type="text" maxlength="80" placeholder="请输入稿件标题" class="input-box-v2-1-val" ng-model="video.title">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ui-v2-normal-line-white-divide"></div>
+                    <!--简介-->
+                    <div class="content-desc-v2-container">
+                      <div class="section-title-v2-container">
+                        <h3 class="section-title-v2-content-main">简介</h3>
+                      </div>
+                      <div class="content-desc-v2-text-wrp">
+                        <div class="text-area-box-v2-container">
+                          <textarea class="text-area-box-v2-val placeholder-style" ng-model="video.brief"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dividing-line"></div>
+                    <!---->
+                  </div>
+                  <!---->
+                  <div class="progress" ng-show="videoFile.progress >= 0">
+                    <div class="progress-bar" role="progressbar" style="width: {{videoFile.progress}}%" ng-bind="videoFile.progress + '%'"></div>
+                    <br>
+                  </div>
+                  <!--按钮-->
+                  <div class="submit-button-group-v2-container">
+                    <button ng-disabled="!myForm.$valid" ng-click="uploadVideo(videoFile)" type="button" class="btn btn-primary">上传</button>
+                  </div>
+                  <!--按钮END-->
+                </div>
               </div>
-              
-              <button ng-disabled="!myForm.$valid" ng-click="uploadVideo(videoFile)" type="button" class="btn btn-primary">上传</button>
-
-              <!--span class="progress" ng-show="videoFile.progress >= 0">
-                <div style="width:{{videoFile.progress}}%" ng-bind="videoFile.progress + '%'"></div>
-              </span-->
-              <!--Bootstrap编写进度条-->
-              
-              <!--span ng-show="videoFile.result">上传成功</span-->
-              <div ng-show="videoFile.result" class="alert alert-success" role="alert">上传成功</div>
-              <div ng-show="errorMsg" class="alert alert-danger" role="alert">上传失败</div>
-              <!--span class="err" ng-show="errorMsg">{{errorMsg}}</span-->
-            </fieldset>
+            </div>
           </form>
-          <!--form action="/video_upload" method="POST" enctype="multipart/form-data">
-            <label>请选择视频文件：</label><span class="small-tip">视频文件暂只支持.mp4格式</span>
-            <input id="files" type="file" name="file" ng-src={{files[0].name}} onchange="angular.element(this).scope().fileChanged(this)"/>
-            <hr>
-            <p>选择分区</p>
-            <select ng-model="video.tag">
-              <option value="Game">游戏</option>
-              <option value="Life">生活</option>
-              <option value="Technology">科技</option>
-              <option value="FileNTV">影视</option>
-            </select>
-            <hr>
-            <p>视频标题</p>
-            <input type="text" class="form-control" aria-describedby="basic-addon1" ng-model="video.title">
-            <hr>
-            <p>视频简介</p>
-            <textarea class="form-control" ng-model="video.brief"></textarea>
-            <button class="btn btn-primary" type="submit" ng-click="upload()">投稿</button>
-          </form-->
         </div>
       </div>
     </div>
-    <div class="col-md-2"></div>
+    <div class="col-md-1"></div>
   </div>
 </div>

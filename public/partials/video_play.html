@@ -5,28 +5,37 @@
 </ul>
 
 <div class="container">
-
-  <div class="row" style="margin-bottom: 25px;">
-    <div class="col-md-2"></div>
-    <div class="col-md-5">
+  <!--视频区-->
+  <div class="row my-row">
+    <div class="col-md-1"></div>
+    <div class="col-md-7">
       <div class="card">
         <div class="card-body">
-          <video src="{{video.v_path}}" width="400" height="300" style="clear:both;display: block;margin:auto" controls="controls">
+          <div class="bilibili-player-video-wrap">
+            <div class="bilibili-player-video">
+              <video src="{{video.v_path}}" controls="controls"></video>
+            </div>
+          </div>
+          <!--video src="{{video.v_path}}" width="400" height="300" style="clear:both;display: block;margin:auto" controls="controls"></video-->
         </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <h2><b>{{video.v_title}}</b></h2>
-      <br>
-      <p><small>作者：</small><a href="/#!/space/{{video.up_id}}"><small>{{video.up_id}}</small></a></p>
-      <p><small>视频简介：{{video.v_brief}}</small></p>
+    <div class="col-md-3 father">
+      <div class="card describe">
+        <div class="card-body">
+          <h2><b>{{video.v_title}}</b></h2>
+          <br>
+          <p><small>作者：</small><a href="/#!/space/{{video.up_id}}"><small>{{video.up_id}}</small></a></p>
+          <p><small>视频简介：{{video.v_brief}}</small></p>
+        </div>
+      </div>
     </div>
-    <div class="col-md-2"></div>
+    <div class="col-md-1"></div>
   </div>
-
-  <div class="row" style="margin-bottom: 25px;">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
+  <!--评论发布-->
+  <div class="row my-row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
       <div class="card">
         <!--已登录-->
         <div class="card-body comment-send" ng-if="isLogin">
@@ -56,39 +65,32 @@
       </div>
     </div>
   </div>
+  <div class="col-md-1"></div>
   </div>
   <!--评论区-->
-  <div class="row" style="margin-bottom: 25px;">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
+  <div class="row my-row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
       <div class="card">
-        <div class="card-body">
-          <p ng-if="isNull">暂无评论</p>
-          <ul>
-            <li ng-repeat="comment in commentList | orderBy: 'comment.date':true" class="videolist">
-              <!--p><font color="green">{{comment.from_uid}}</font>&nbsp;<small>{{comment.date}}</small></p>
-              <p>{{comment.content}}</p-->
-              <!--bilibili样式-->
-              <div class="mycard reply-item">
-                <div class="top">
-                  <div class="top-left">
-                    <a href="/#!/space/{{comment.from_uid}}" class="avatar" style="background-image: url({{comment.avatar}})"></a>
-                  </div>
-                  <div class="top-right">
-                    <div class="name-box">
-                      <a href="/#!/space/{{comment.from_uid}}" class="name">{{comment.from_uid}}</a>
-                      <span class="time">{{comment.date}}</span>
-                    </div>
-                    <div class="comment-content">
-                      <span class="text">{{comment.content}}</span>
-                    </div>
-                  </div>
-                </div>
+        <div class="card-body comment-list">
+          <div class="list-item reply-wrap" ng-repeat="comment in commentList | orderBy: 'comment.date':true">
+            <div class="user-face">
+              <a href="/#!/space/{{comment.from_uid}}">
+              <img ng-src="{{comment.avatar}}">
+              </a>
+            </div>
+            <div class="con">
+              <div class="user">
+                <a href="/#!/space/{{comment.from_uid}}" class="name">{{comment.from_uid}}</a>
               </div>
-            </li>
-          </ul>
+              <p class="text">{{comment.content}}</p>
+              <div class="info">
+                <span class="time">{{comment.date}}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
+</div>

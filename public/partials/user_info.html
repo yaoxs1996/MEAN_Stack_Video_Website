@@ -6,134 +6,224 @@
 </ul>
 
 <div class="container">
-  <div class="row" style="margin-bottom: 25px;">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
+  <div class="row my-row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
       <div class="card">
-        <div class="card-header">我的信息</div>
-        <div class="card-body">
-          <form name="infoForm" novalidate>
-            <table>
-              <tr>
-                <td><div style="height:48px;line-height: 48px;"><p>头像：</p></div></td>
-                <td><div style="height:48px;line-height: 48px;">
-                  <select name="avatar" ng-model="user.avatar" ng-init="user.avatar = 'avatar/321_146_146.png'">
-                    <option value="avatar/321_146_146.png">321</option>
-                    <option value="avatar/322_146_146.png">322</option>
-                    <option value="avatar/323_146_146.png">323</option>
-                    <option value="avatar/324_146_146.png">324</option>
-                    <option value="avatar/325_146_146.png">325</option>
-                    <option value="avatar/326_146_146.png">326</option>
-                    <option value="avatar/327_146_146.png">327</option>
-                    <option value="avatar/328_146_146.png">328</option>
-                    <option value="avatar/329_146_146.png">329</option>
-                    <option value="avatar/330_146_146.png">330</option>
-                  </select></div></td>
-                <td><div style="height:48px;line-height: 48px;"><img name="img" ng-src="{{user.avatar}}" width="48px" height="48px"></div></td>
-              </tr>
-              <tr>
-                <td><div style="height:40px;line-height: 40px;"><p>用户名：</p></div></td>
-                <td><div style="height:40px;line-height: 40px;">{{user.u_name}}</div></td>
-              </tr>
-              <tr>
-                <td><div style="height:40px;line-height: 40px;"><p>邮  箱：</p></div></td>
-                <td><div style="height:40px;line-height: 40px;"><input type="email" class="form-control" style="width:250px;" ng-model="user.email"></div></td>
-                <span style="color:red" ng-show="infoForm.user.email.$dirty && infoForm.user.email.$invalid">
-                <span ng-show="infoForm.user.email.$error.required">邮箱不可为空</span>
-                <span ng-show="infoForm.user.email.$error.email">非法邮箱</span>
-                </span>
-              </tr>
-              <tr>
-                <td><div style="height:40px;line-height: 40px;"><p>性  别：</p></div></td>
-                <td>
-                  <div style="height:40px;line-height: 40px;">
-                    <input type="radio" ng-model="user.sex" style="line-height:24px" value="男">男
-                    <input type="radio" ng-model="user.sex" style="line-height:24px" value="女">女
-                    <input type="radio" ng-model="user.sex" style="line-height:24px" value="">保密
+        <div class="card-body my-col">
+          <div class="security-right">
+            <div class="security-right-title">
+              <span class="security-right-title-icon"></span>
+              <span class="security-right-title-text">我的信息</span>
+            </div>
+            <div class="user-setting-warp">
+              <div>
+                <form class="el-form clearfix">
+                  <!--用户名-->
+                  <div class="el-form-item user-nick-rel-name">
+                    <label class="el-form-item__label">用户名：</label>
+                    <div class="el-form-item__content">
+                      <span class="userinfo-username">{{user.u_name}}</span>
+                    </div>
                   </div>
-                </td>
-              </tr>
-            </table>
-            <button type="button" ng-disabled="infoForm.user.email.$dirty && infoForm.user.email.$invalid" class="btn btn-primary" ng-click="apply_info()">修改信息</button>
-          </form>
+                  <!--头像-->
+                  <div class="el-form-item">
+                    <label class="el-form-item__label">头像：</label>
+                    <div class="el-form-item__content">
+                      <select name="avatar" ng-model="user.avatar">
+                        <option value="avatar/321_146_146.png">321</option>
+                        <option value="avatar/322_146_146.png">322</option>
+                        <option value="avatar/323_146_146.png">323</option>
+                        <option value="avatar/324_146_146.png">324</option>
+                        <option value="avatar/325_146_146.png">325</option>
+                        <option value="avatar/326_146_146.png">326</option>
+                        <option value="avatar/327_146_146.png">327</option>
+                        <option value="avatar/328_146_146.png">328</option>
+                        <option value="avatar/329_146_146.png">329</option>
+                        <option value="avatar/330_146_146.png">330</option>
+                      </select>
+                      <img name="img" ng-src="{{user.avatar}}" width="48px" height="48px">
+                    </div>
+                  </div>
+                  <!--邮箱-->
+                  <div class="el-form-item user-nick-name">
+                    <label class="el-form-item__label">邮箱：</label>
+                    <div class="el-form-item__content">
+                      <div class="el-input">
+                        <input autocomplete="off" placeholder="你的邮箱" type="text" rows="2" maxlength="40" class="el-input__inner" ng-model="user.email">
+                      </div>
+                    </div>
+                  </div>
+                  <!--性别-->
+                  <div class="el-form-item user-my-sex">
+                    <label class="el-form-item__label">性别：</label>
+                    <div class="el-form-item__content">
+                      <input type="radio" ng-model="user.sex" style="line-height:24px" value="男">男
+                      <input type="radio" ng-model="user.sex" style="line-height:24px" value="女">女
+                      <input type="radio" ng-model="user.sex" style="line-height:24px" value="">保密
+                    </div>
+                  </div>
+                  <!--按钮-->
+                  <div class="el-form-item user-my-btn">
+                    <div class="el-form-item__content">
+                      <div class="padding-dom"></div>
+                      <div class="user-my-btn-warp">
+                        <button type="button" class="el-button el-button--primary" ng-click="apply_info()">
+                          <span>保存</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-md-2"></div>
+    <div class="col-md-1"></div>
   </div>
 
-  <div class="row" style="margin-bottom: 25px;">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
+  <div class="row my-row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
       <div class="card">
-        <div class="card-header">密码修改</div>
         <div class="card-body">
-          <table>
-            <tr>
-              <td><div style="height:40px;line-height: 40px;"><p>原密码：</p></div></td>
-              <td><div style="height:40px;line-height: 40px;"><input type="password" class="form-control" style="width: 360px;" ng-model="user.oldpass"></div></td>
-            </tr>
-            <tr>
-                <td><div style="height:40px;line-height: 40px;"><p>新密码：</p></div></td>
-                <td><div style="height:40px;line-height: 40px;"><input type="password" class="form-control" style="width: 360px;" ng-model="user.newpass"></div></td>
-            </tr>
-            <tr>
-                <td><div style="height:40px;line-height: 40px;"><p>再次输入密码：</p></div></td>
-                <td><div style="height:40px;line-height: 40px;"><input type="password" class="form-control" style="width: 360px;" ng-model="user.newpass_1"></div></td>
-            </tr>
-          </table>
-          <button type="button" class="btn btn-primary" ng-click="apply_pass()">提交密码</button>
+          <div class="security-right">
+            <div class="security-right-title">
+              <div class="security-right-title-icon"></div>
+              <div class="security-right-title-text">密码修改</div>
+            </div>
+            <div class="user-setting-warp">
+              <form class="el-form clearfix">
+                <!--原密码-->
+                <div class="el-form-item user-nick-name">
+                  <label class="el-form-item__label">原密码：</label>
+                  <div class="el-form-item__content">
+                    <div class="el-input">
+                      <input autocomplete="off" placeholder="密码" type="password" rows="2" maxlength="40" class="el-input__inner" ng-model="user.oldpass">
+                    </div>
+                  </div>
+                </div>
+                <!--新密码-->
+                <div class="el-form-item user-nick-name">
+                  <label class="el-form-item__label">新密码：</label>
+                  <div class="el-form-item__content">
+                    <div class="el-input">
+                      <input autocomplete="off" placeholder="密码" type="password" rows="2" maxlength="40" class="el-input__inner" ng-model="user.newpass">
+                    </div>
+                  </div>
+                </div>
+                <!--新密码-->
+                <div class="el-form-item user-nick-name">
+                  <label class="el-form-item__label">新密码：</label>
+                  <div class="el-form-item__content">
+                    <div class="el-input">
+                      <input autocomplete="off" placeholder="密码" type="password" rows="2" maxlength="40" class="el-input__inner" ng-model="user.newpass_1">
+                    </div>
+                  </div>
+                </div>
+                <!--按钮-->
+                <div class="el-form-item user-my-btn">
+                  <div class="el-form-item__content">
+                    <div class="padding-dom"></div>
+                    <div class="user-my-btn-warp">
+                      <button type="button" class="el-button el-button--primary" ng-click="apply_pass()">
+                        <span>保存</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!--END-->
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <div class="col-md-1"></div>
   </div>
 
   <!--我的关注列表-->
-  <div class="row" style="margin-bottom: 25px;">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
+  <div class="row my-row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
       <div class="card">
-        <div class="card-header">我的关注</div>
         <div class="card-body">
-          <ul>
-            <li ng-repeat="follow in followList" class="videolist">
-              <div class="col-md-1">
-                <p>{{follow.follow_id}}</p>
+          <div class="security-right">
+            <div class="security-right-title">
+              <div class="security-right-title-icon"></div>
+              <div class="security-right-title-text">我的关注</div>
+            </div>
+            <div class="user-setting-warp">
+              <div class="follow-content section">
+                <div class="content" style="padding-bottom: 10px;">
+                  <ul class="relation-list">
+                    <li class="list-item clearfix" ng-repeat="follow in followList">
+                      <div class="follow-select" style="display: none;">
+                        <div class="icon icon-follow-watched"></div>
+                      </div>
+                      <a href="/#!/space/{{follow.follow_id}}" class="cover">
+                        <img src="../avatar/default.png">
+                      </a>
+                      <div class="content">
+                        <a href="/#!/space/{{follow.follow_id}}" class="title"><span class="vip-name-check fans-name">{{follow.follow_id}}</span></a>
+                        <p class="auth-description">视频作者</p>
+                        <div class="fans-action">
+                          <button type="button" class="btn btn-warning btn-sm" ng-click="unfollow(follow._id)">-取消关注</button>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               </div>
-              <div class="col-md-10">
-                <button type="button" class="btn btn-warning btn-sm" ng-click="unfollow(follow._id)">-取消关注</button>
-              </div>
-              <br>
-              <br>
-            </li>
-          </ul>
+            </div>
+          </div>
           <p ng-if="isNull">您暂时没有关注任何人</p>
         </div>
       </div>
     </div>
+    <div class="col-md-1"></div>
   </div>
-
-  <div class="row" style="margin-bottom: 25px;">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
+  <!--投稿-->
+  <div class="row my-row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
       <div class="card">
-        <div class="card-header">我的投稿</div>
         <div class="card-body">
-          <ul>
-            <li ng-repeat='video in videolist' class="videolist">
-              <div class="col-sm-6">
-                <a href="/#!/video/{{video._id}}">
-                <img ng-src="{{video.v_coverage}}" alt="pic" width="160" height="100">
-                </a>
-                <p>{{video.v_title}}</p>
-                <button type="button" class="btn btn-danger" ng-click="delete_video(video._id)">删除</button>
+          <div class="security-right">
+            <div class="security-right-title">
+              <div class="security-right-title-icon"></div>
+              <div class="security-right-title-text">投稿管理</div>
+            </div>
+            <div class="user-setting-warp">
+              <div ng-repeat="video in videolist">
+                <div>
+                  <div class="article-card clearfix">
+                    <a href="/#!/video/{{video._id}}" class="cover-wrp">
+                      <img ng-src="{{video.v_coverage}}" width="160" height="100">
+                      <div class="tag-wrapper"></div>
+                    </a>
+                    <div class="meta-wrp">
+                      <div class="meta-title">
+                        <span class="typename">{{video.v_tag}}</span>
+                        <a href="/#!/video/{{video._id}}" class="name ellipsis">{{video.v_title}}</a>
+                      </div>
+                      <div class="meta-status">
+                        <span class="pubdate is-success">{{video.up_date}}</span>
+                      </div>
+                      <div class="meta-view">
+                        <button type="button" class="btn btn-danger" ng-click="delete_video(video._id)">删除</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-md-2"></div>
+    <div class="col-md-1"></div>
   </div>
-
 </div>

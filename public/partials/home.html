@@ -4,136 +4,145 @@
 </ul>
 
 <div class="container">
-
-  <div class="row" style="margin-bottom: 25px;">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
+  <!--游戏-->
+  <div class="row my-row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
       <div class="card">
-        <div class="card-header">游戏</div>
         <div class="card-body">
-          <ul>
-            <li ng-repeat="video in videos | filter: {v_tag: 'Game'} | limitTo: 8" class="videolist">
-              <div class="col-md-3">
-                <a href="/#!/video/{{video._id}}">
-                <img ng-src="{{video.v_coverage}}" alt="game" width="160" height="100">
-                </a>
-                <p>{{video.v_title}}</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2"></div>
-  </div>
-
-  <div class="row" style="margin-bottom: 25px;">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">生活</div>
-        <div class="card-body">
-          <ul>
-            <li ng-repeat="video in videos | filter: {v_tag: 'Life'} | limitTo: 8" class="videolist">
-              <div class="col-md-3">
-                <a href="/#!/video/{{video._id}}">
-                <img ng-src="{{video.v_coverage}}" alt="life" width="160" height="100">
-                </a>
-                <p>{{video.v_title}}</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2"></div>
-  </div>
-
-  <div class="row" style="margin-bottom: 25px;">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">影视</div>
-        <div class="card-body">
-          <ul>
-            <li ng-repeat="video in videos | filter: {v_tag: 'FilmNTV'} | limitTo: 8" class="videolist">
-              <div class="col-md-3">
-                <a href="/#!/video/{{video._id}}">
-                <img ng-src="{{video.v_coverage}}" alt="tv" width="160" height="100">
-                </a>
-                <p>{{video.v_title}}</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2"></div>
-  </div>
-      
-  <div class="row" style="margin-bottom: 25px;">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">科技</div>
-        <div class="card-body">
-          <ul>
-            <li ng-repeat="video in videos | filter: {v_tag: 'Technology'} | limitTo: 8" class="videolist">
-              <div class="col-md-3">
-                <a href="/#!/video/{{video._id}}">
-                <img ng-src="{{video.v_coverage}}" alt="tech" width="160" height="100">
-                </a>
-                <p>{{video.v_title}}</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2"></div>
-  </div>
-
-	<div class="row" style="margin-bottom: 25px;">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-      <div class="card">
-      <div class="card-header">全部视频</div>
-      <div class="card-body">
-        <ul>
-          <li ng-repeat="video in videos" class="videolist">
-            <div class="col-md-3">
-              <a href="/#!/video/{{video._id}}">
-              <img ng-src="{{video.v_coverage}}" alt="guda" width="160" height="100">
-              </a>
-            <p>{{video.v_title}}</p>
+          <div class="zone-title">
+            <div class="headline clearfix">
+              <p class="name">游戏</p>
             </div>
-          </li>
-        </ul>
-      </div>
-      </div>
-    </div>
-    <!--bilibili样式-->
-    <!--div class="col-md-8">
-      <div class="card">
-        <div class="card-body">
-          <ul>
-            <li ng-repeat="video in videos" class="videolist">
-              <div class="ebox">
-                <a href="/#!/video/{{video._id}}">
+          </div>
+          <div class="storey-box clearfix">
+            <div class="spread-module" ng-repeat="video in videos | filter:{v_tag: 'Game'} | limitTo: 8">
+              <a href="/#!/video/{{video._id}}">
+                <div class="pic">
                   <div class="lazy-img">
-                    <img ng-src="{{video.v_coverage}}" width="108" height="130">
+                    <img ng-src="{{video.v_coverage}}" width="160" height="100">
                   </div>
-                  <p class="etitle">{{video.v_title}}</p>
-                </a>
-                <div class="dlo">
-                  <a href="/#!/space/{{video.up_id}}" class="author">{{video.up_id}}</a>
                 </div>
-              </div>
-            </li>
-          </ul>
+                <p class="t">{{video.v_title}}</p>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-    </div-->
-    <div class="col-md-2"></div>
-	</div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+  <!--生活-->
+  <div class="row my-row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-body">
+          <div class="zone-title">
+            <div class="headline clearfix">
+              <p class="name">生活</p>
+            </div>
+          </div>
+          <div class="storey-box clearfix">
+            <div class="spread-module" ng-repeat="video in videos | filter: {v_tag: 'Life'} | limitTo: 8">
+              <a href="/#!/video/{{video._id}}">
+                <div class="pic">
+                  <div class="lazy-img">
+                    <img ng-src="{{video.v_coverage}}" width="160" height="100">
+                  </div>
+                </div>
+                <p class="t">{{video.v_title}}</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+  <!--影视-->
+  <div class="row my-row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-body">
+          <div class="zone-title">
+            <div class="headline clearfix">
+              <p class="name">影视</p>
+            </div>
+          </div>
+          <div class="storey-box clearfix">
+            <div class="spread-module" ng-repeat="video in videos | filter:{v_tag: 'FilmNTV'} | limitTo: 8">
+              <a href="/#!/video/{{video._id}}">
+                <div class="pic">
+                  <div class="lazy-img">
+                    <img ng-src="{{video.v_coverage}}" width="160" height="100">
+                  </div>
+                </div>
+                <p class="t">{{video.v_title}}</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+  <!--科技-->
+  <div class="row my-row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-body">
+          <div class="zone-title">
+            <div class="headline clearfix">
+              <p class="name">科技</p>
+            </div>
+          </div>
+          <div class="storey-box clearfix">
+            <div class="spread-module" ng-repeat="video in videos | filter:{v_tag: 'Tech'} | limitTo: 8">
+              <a href="/#!/video/{{video._id}}">
+                <div class="pic">
+                  <div class="lazy-img">
+                    <img ng-src="{{video.v_coverage}}" width="160" height="100">
+                  </div>
+                </div>
+                <p class="t">{{video.v_title}}</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+  <!--全部视频-->
+	<div class="row my-row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-body">
+          <div class="zone-title">
+            <div class="headline clearfix">
+              <p class="name">全部</p>
+            </div>
+          </div>
+          <div class="storey-box clearfix">
+            <div class="spread-module" ng-repeat="video in videos">
+              <a href="/#!/video/{{video._id}}">
+                <div class="pic">
+                  <div class="lazy-img">
+                    <img ng-src="{{video.v_coverage}}" width="160" height="100">
+                  </div>
+                </div>
+                <p class="t">{{video.v_title}}</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+  <!--END-->
 </div>
