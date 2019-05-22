@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="storey-box clearfix">
-            <div class="spread-module" ng-repeat="video in videos | filter:{v_tag: 'Game'} | limitTo: 8">
+            <div class="spread-module" ng-repeat="video in videos | filter:{v_tag: 'Game'} | limitTo: 8 | orderBy: 'video.up_date': true">
               <a href="/#!/video/{{video._id}}">
                 <div class="pic">
                   <div class="lazy-img">
@@ -44,7 +44,7 @@
             </div>
           </div>
           <div class="storey-box clearfix">
-            <div class="spread-module" ng-repeat="video in videos | filter: {v_tag: 'Life'} | limitTo: 8">
+            <div class="spread-module" ng-repeat="video in videos | filter: {v_tag: 'Life'} | limitTo: 8 | orderBy: 'video.up_date': true">
               <a href="/#!/video/{{video._id}}">
                 <div class="pic">
                   <div class="lazy-img">
@@ -72,7 +72,7 @@
             </div>
           </div>
           <div class="storey-box clearfix">
-            <div class="spread-module" ng-repeat="video in videos | filter:{v_tag: 'FilmNTV'} | limitTo: 8">
+            <div class="spread-module" ng-repeat="video in videos | filter:{v_tag: 'FilmNTV'} | limitTo: 8 | orderBy: 'video.up_date': true">
               <a href="/#!/video/{{video._id}}">
                 <div class="pic">
                   <div class="lazy-img">
@@ -100,7 +100,7 @@
             </div>
           </div>
           <div class="storey-box clearfix">
-            <div class="spread-module" ng-repeat="video in videos | filter:{v_tag: 'Tech'} | limitTo: 8">
+            <div class="spread-module" ng-repeat="video in videos | filter:{v_tag: 'Tech'} | limitTo: 8 | orderBy: 'video.up_date': true">
               <a href="/#!/video/{{video._id}}">
                 <div class="pic">
                   <div class="lazy-img">
@@ -128,7 +128,7 @@
             </div>
           </div>
           <div class="storey-box clearfix">
-            <div class="spread-module" ng-repeat="video in videos">
+            <div class="spread-module" ng-repeat="video in videos | orderBy: 'video.up_date': true">
               <a href="/#!/video/{{video._id}}">
                 <div class="pic">
                   <div class="lazy-img">

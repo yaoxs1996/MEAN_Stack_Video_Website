@@ -19,6 +19,20 @@ router.get('/:id', function(req, res)
     });
 });
 
+/*获得用户列表 */
+router.get('/', function(req, res)
+{
+    var collection = db.get('users');
+    collection.find({}, {fields: {u_name: 1, avatar: 1}}, function(err, users)
+    {
+        if(err)
+        {
+            throw err;
+        }
+        res.json(users);
+    });
+});
+
 //修改个人信息
 router.put('/:id', function(req, res)
 {

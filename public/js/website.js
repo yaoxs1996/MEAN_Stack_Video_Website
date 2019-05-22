@@ -113,9 +113,26 @@ function($scope, $resource, $routeParams, $rootScope, $location)
     var Videos = $resource('/api/videos/:id');
     var Comment = $resource('/comment/:id');        //获取评论
     var Comment_sub = $resource('/comment');        //提交评论
+    var UserAvatar = $resource('/api/user');
     Comment.query({id: $routeParams.id}, function(commentList)
     {
         $scope.commentList = commentList;
+
+        /*获得用户头像 */
+        UserAvatar.query(function(usersAvatar)
+        {
+            //console.log(usersAvatar);
+            for(let i in $scope.commentList)
+            {
+                for(let j in usersAvatar)
+                {
+                    if(usersAvatar[j]["u_name"] == $scope.commentList[i]["from_uid"])
+                    {
+                        $scope.commentList[i]["avatar"] = usersAvatar[j]["avatar"];
+                    }
+                }
+            }
+        });
 
         /*评论为空 */
         if(commentList.length == 0)
@@ -466,9 +483,26 @@ function($scope, $resource, $location, $routeParams, $rootScope)
 
     /*获取关注列表 */
     var Follow = $resource('/follow/:id');
+    var UserAvatar = $resource('/api/user');
     Follow.query({id: $rootScope.USERID}, function(result)
     {
         $scope.followList = result;
+
+        /*获得用户头像 */
+        UserAvatar.query(function(usersAvatar)
+        {
+            //console.log(usersAvatar);
+            for(let i in $scope.followList)
+            {
+                for(let j in usersAvatar)
+                {
+                    if(usersAvatar[j]["u_name"] == $scope.followList[i]["follow_id"])
+                    {
+                        $scope.followList[i]["avatar"] = usersAvatar[j]["avatar"];
+                    }
+                }
+            }
+        });
 
         //console.log(result.length);
         /*判断关注列表是否为空 */
@@ -609,9 +643,25 @@ function($scope, $resource, $rootScope, $routeParams, $location)
     /*留言板块 */
     /*获取留言 */
     var MsgBoard = $resource('/msgBoard/:id');
+    var UserAvatar = $resource('/api/user');
     MsgBoard.query({id: $routeParams.id}, function(msgList)
     {
         $scope.msgList = msgList;
+
+        /*获得用户头像 */
+        UserAvatar.query(function(usersAvatar)
+        {
+            for(let i in $scope.msgList)
+            {
+                for(let j in usersAvatar)
+                {
+                    if(usersAvatar[j]["u_name"] == $scope.msgList[i]["sender_id"])
+                    {
+                        $scope.msgList[i]["avatar"] = usersAvatar[j]["avatar"];
+                    }
+                }
+            }
+        });
     });
 
     var msgReload = function()
@@ -619,6 +669,19 @@ function($scope, $resource, $rootScope, $routeParams, $location)
         MsgBoard.query({id: $routeParams.id}, function(msgList)
         {
             $scope.msgList = msgList;
+            UserAvatar.query(function(usersAvatar)
+            {
+                for(let i in $scope.msgList)
+                {
+                    for(let j in usersAvatar)
+                    {
+                        if(usersAvatar[j]["u_name"] == $scope.msgList[i]["sender_id"])
+                        {
+                            $scope.msgList[i]["avatar"] = usersAvatar[j]["avatar"];
+                        }
+                    }
+                }
+            });
         });
     };
 
@@ -681,11 +744,28 @@ function($scope, $resource, $rootScope, $routeParams)
         $rootScope.myFollowList = followList;       //作为全局对象，将结果传递给过滤器
     });
 
+    var UserAvatar = $resource('/api/user');
     Dynamics.query(function(dynamicsList)
     {
         $scope.dynamicsList = dynamicsList;
 
-        console.log(dynamicsList.length);
+        /*获得用户头像 */
+        UserAvatar.query(function(usersAvatar)
+        {
+            //console.log(usersAvatar);
+            for(let i in $scope.dynamicsList)
+            {
+                for(let j in usersAvatar)
+                {
+                    if(usersAvatar[j]["u_name"] == $scope.dynamicsList[i]["user_id"])
+                    {
+                        $scope.dynamicsList[i]["avatar"] = usersAvatar[j]["avatar"];
+                    }
+                }
+            }
+        });
+
+        //console.log(dynamicsList.length);
         if(dynamicsList.length == 0)
         {
             $scope.dyIsNull = true;
@@ -713,10 +793,26 @@ function($scope, $resource, $rootScope, $routeParams, $location)
 
     /*获取消息*/
     var Noti = $resource('/notification/:id');
+    var UserAvatar = $resource('/api/user');
     Noti.query({id: $routeParams.id}, function(notiList)
     {
         $scope.notiList = notiList;
 
+        /*获得用户头像 */
+        UserAvatar.query(function(usersAvatar)
+        {
+            //console.log(usersAvatar);
+            for(let i in $scope.notiList)
+            {
+                for(let j in usersAvatar)
+                {
+                    if(usersAvatar[j]["u_name"] == $scope.notiList[i]["sla_id"])
+                    {
+                        $scope.notiList[i]["avatar"] = usersAvatar[j]["avatar"];
+                    }
+                }
+            }
+        });
         if(notiList.length == 0)
         {
             $scope.notiIsNull = true;

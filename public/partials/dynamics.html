@@ -9,8 +9,8 @@
   <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
-      <div class="dy-card" style="margin-top:0px;border-top:1px solid rgb(238,238,238);" ng-repeat="dynamics in dynamicsList | getMyFollowList | orderBy: 'dynamics.update_time':true">
-        <a href="/#!/space/{{dynamics.user_id}}" class="user-head c-pointer" style="background-image:url('../avatar/default.png');border-radius:50%;"></a>
+      <div class="dy-card" style="margin-top:0px;border-top:1px solid rgb(238,238,238);" ng-repeat="dynamics in dynamicsList | getMyFollowList |  orderBy: 'dynamics.update_time':true">
+        <a href="/#!/space/{{dynamics.user_id}}" class="user-head c-pointer" style="background-image:url('{{dynamics.avatar}}');border-radius:50%;"></a>
         <div class="main-content" style="padding-bottom: 0px;">
           <p class="user-name fs-16 ls-0 d-i-block">
             <a href="/#!/space/{{dynamics.user_id}}" class="c-pointer">{{dynamics.user_id}}</a>
