@@ -293,8 +293,40 @@ function($scope, $resource, $location, $rootScope)
 app.controller('LogoutCtrl', ['$location', '$rootScope',
 function($location, $rootScope)
 {
+    /*console.log("before" + $rootScope.USERID);
+    swal({
+        title: "确定退出？",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((quit)=>
+    {
+        if(quit)
+        {
+            $rootScope.USERID = '';
+            $rootScope.isLogin = false;
+            $location.path('/');
+            console.log("after" + $rootScope.USERID);
+            swal({
+                text: '退出成功！',
+                icon: 'success',
+            })
+            .then((T)=>
+            {
+                $location.path('/');
+            });
+        }
+        else
+        {
+            history.go(-1);
+            //console.log("执行了");
+        }
+    });*/
+    
     $rootScope.USERID = '';
     $rootScope.isLogin = false;
+    
     swal({
         text: '退出成功！',
         icon: 'success',
@@ -303,8 +335,8 @@ function($location, $rootScope)
 }]);
 
 //视频上传控制器
-app.controller('UpCtrl', ['$scope', '$resource', '$location', '$rootScope', 'Upload', '$timeout',
-function($scope, $resource, $location, $rootScope, Upload, $timeout)
+app.controller('UpCtrl', ['$scope', '$location', '$rootScope', 'Upload', '$timeout',
+function($scope, $location, $rootScope, Upload, $timeout)
 {
     if($rootScope.isLogin != true)
     {
@@ -386,8 +418,8 @@ function($scope, $resource, $location, $rootScope, Upload, $timeout)
 }]);
 
 //用户信息控制器
-app.controller('UserCtrl', ['$scope', '$resource', '$location', '$routeParams','$rootScope',
-function($scope, $resource, $location, $routeParams, $rootScope)
+app.controller('UserCtrl', ['$scope', '$resource', '$routeParams','$rootScope',
+function($scope, $resource, $routeParams, $rootScope)
 {
     var User = $resource('/api/user/:id');
     var User_update = $resource('/api/user/:id', {id: '@u_name'}, {update: {method: 'PUT'}});

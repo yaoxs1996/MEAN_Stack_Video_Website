@@ -74,11 +74,16 @@ router.post('/', multipartMiddleware, function(req, res)
         videoId = video._id;
 
         /*动态表插入 */
+        video_id = JSON.stringify(videoId);
+        video_id = video_id.substring(1, video_id.length-1);
+        v_coverage = JSON.stringify(video.v_coverage);
+        v_coverage = v_coverage.substring(1, v_coverage.length-1);
+
         col_dynamics.insert({
             user_id: videoinfo.up_id,
-            video_id: JSON.stringify(videoId),
+            video_id: video_id,
             update_time: new Date().toLocaleString(),
-            v_coverage: JSON.stringify(video.v_coverage),
+            v_coverage: v_coverage,
             avatar: videoinfo.avatar,
             isRead: false
         }, function(err, dynamics)
